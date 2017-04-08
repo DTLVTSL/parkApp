@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "656741739209",
+    "firebase_url": "https://parkinsonapp-7b987.firebaseio.com",
+    "project_id": "parkinsonapp-7b987",
+    "storage_bucket": "parkinsonapp-7b987.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656741739209:android:55f6c58891dd9953",
+        "android_client_info": {
+          "package_name": "com.example.daniel.firebaseauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656741739209-n44r7ujvsptkgkrgc01mp790ehe3bv5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZRJgTKUrJt21-6j4_prsbhjQ2ofjpmKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
