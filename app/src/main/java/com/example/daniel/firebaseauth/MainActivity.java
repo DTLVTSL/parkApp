@@ -1,7 +1,5 @@
 package com.example.daniel.firebaseauth;
-// jessica
-//
-//klkñ
+
 import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
