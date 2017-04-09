@@ -6,21 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.daniel.firebaseauth.MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="129dp"
-        android:layout_height="115dp"
-        app:srcCompat="@mipmap/logoparkinson"
-        tools:layout_editor_absoluteY="66dp"
-        tools:layout_editor_absoluteX="116dp" />
+
 
     <LinearLayout
         android:layout_width="302dp"
-        android:layout_height="310dp"
+        android:layout_height="500dp"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="247dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/logoparkinson"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="100dp" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -42,10 +46,19 @@
             android:id="@+id/buttonSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="30dp"
             android:text="Signup" />
 
     </LinearLayout>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_begin="20dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="20dp"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </android.support.constraint.ConstraintLayout>
