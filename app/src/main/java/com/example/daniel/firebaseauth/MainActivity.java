@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,9 +21,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //defining view objects
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private Button buttonSignup;
+    private Button buttonRegister;
+    private TextView textViewSignin;
     private ProgressDialog progressDialog;
-
 
     //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
@@ -39,35 +40,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
-        buttonSignup = (Button) findViewById(R.id.buttonSignup);
+        buttonRegister = (Button) findViewById(R.id.buttonRegister);
+
+        textViewSignin=(TextView)findViewById(R.id.textViewSignin);
+
 
         progressDialog = new ProgressDialog(this);
 
         //attaching listener to button
-        buttonSignup.setOnClickListener(this);
+        textViewSignin.setOnClickListener(this);
+        buttonRegister.setOnClickListener(this);
     }
 
     private void registerUser(){
 
         //getting email and password from edit texts
+
         String email = editTextEmail.getText().toString().trim();
         String password  = editTextPassword.getText().toString().trim();
 
         //checking if email and passwords are empty
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Perfavore introduce una email",Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Perfavore introduce una password",Toast.LENGTH_LONG).show();
             return;
         }
 
         //if the email and password are not empty
         //displaying a progress dialog
 
-        progressDialog.setMessage("Registering Please Wait...");
+        progressDialog.setMessage("Registrando utente, Perfavore aspettare ...");
         progressDialog.show();
 
         //creating a new user
@@ -78,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //checking if success
                         if(task.isSuccessful()){
                             //display some message here
-                            Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"Registrato con succeso",Toast.LENGTH_LONG).show();
                         }else{
                             //display some message here
-                            Toast.makeText(MainActivity.this,"Registration Error",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"Registrazione con Errore",Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
