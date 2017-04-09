@@ -1,6 +1,7 @@
 package com.example.daniel.firebaseauth;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //defining view objects
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private Button buttonRegister;
+    private Button buttonSignup;
     private TextView textViewSignin;
     private ProgressDialog progressDialog;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
-        buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonSignup = (Button) findViewById(R.id.buttonSignup);
 
         textViewSignin=(TextView)findViewById(R.id.textViewSignin);
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //attaching listener to button
         textViewSignin.setOnClickListener(this);
-        buttonRegister.setOnClickListener(this);
+        buttonSignup.setOnClickListener(this);
     }
 
     private void registerUser(){
