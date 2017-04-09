@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    tools:context="com.example.daniel.firebaseauth.MainActivity">
+    tools:context="com.example.daniel.firebaseauth.LoginActivity">
 
     <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="108dp"
+            android:layout_height="100dp"
+            android:layout_margin="15dp"
             app:srcCompat="@mipmap/logoparkinson"
             tools:layout_editor_absoluteX="50dp"
             tools:layout_editor_absoluteY="100dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearance"
+            android:text="Login del Utente"
+            android:layout_margin="15dp"
+            android:layout_gravity="center_horizontal"/>
+
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -43,16 +48,16 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/buttonRegister"
+            android:id="@+id/buttonSignin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Registrare" />
+            android:text="Accedere" />
 
         <TextView
             android:textAlignment="center"
-            android:text="Hai un account?"
-            android:id="@+id/textViewSignin"
+            android:text="Non hai un account?, Registare qua"
+            android:id="@+id/textViewSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
