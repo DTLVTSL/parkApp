@@ -39,6 +39,19 @@
             android:hint="Enter Address" />
 
         <Button
+            android:id="@+id/recordBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tap and Hold to Record" />
+
+        <TextView
+            android:id="@+id/recordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Tap and Hold to Record" />
+
+        <Button
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
