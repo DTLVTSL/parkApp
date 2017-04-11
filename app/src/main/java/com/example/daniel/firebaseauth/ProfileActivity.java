@@ -41,20 +41,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+
+
     //view objects
     private TextView textViewUserEmail;
-    private Button buttonLogout;
+    private EditText editTextName;
+    private EditText editTextAddress;
+    private EditText editTelephone;
+    private EditText DateBirth;
+    private Button buttonSave;
     private Button mRecordBtn;
     private TextView mRecordLabel;
+    private Button buttonLogout;
     private MediaRecorder mRecorder;
     private String mFileName = null;
 
     //defining a database reference
     private DatabaseReference databaseReference;
-
-    //our new views
-    private EditText editTextName, editTextAddress;
-    private Button buttonSave;
     private static final String LOG_TAG = "Record_log";
     private StorageReference mStorageRef;
     private ProgressDialog mProgress;
@@ -98,8 +101,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //getting the views from xml resource
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
+
         editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
+        editTelephone = (EditText) findViewById(R.id.editTelephone);
+        DateBirth = (EditText) findViewById(R.id.editDateBirth);
         buttonSave = (Button) findViewById(R.id.buttonSave);
 
         buttonSave.setOnClickListener(this);
@@ -111,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         //displaying logged in user name
-        textViewUserEmail.setText("Welcome "+user.getEmail());
+        textViewUserEmail.setText("Benvenutto "+user.getEmail() );
 
         //adding listener to button
         buttonLogout.setOnClickListener(this);
@@ -159,9 +165,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //Getting values from database
         String name = editTextName.getText().toString().trim();
         String add = editTextAddress.getText().toString().trim();
+        String tel = editTelephone.getText().toString().trim();
+        String dby = DateBirth.getText().toString().trim();
 
         //creating a userinformation object
-        UserInformation userInformation = new UserInformation(name, add);
+        UserInformation userInformation = new UserInformation(name, add, tel, dby);
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
