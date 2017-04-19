@@ -1,11 +1,8 @@
 package com.example.daniel.firebaseauth;
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -17,9 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.TextView;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.media.MediaDescription;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,9 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import android.widget.LinearLayout;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import java.io.IOException;
 import java.io.*;
 
@@ -41,8 +34,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
-
-
+    private StorageReference mStorageRef;
     //view objects
     private TextView textViewUserEmail;
     private EditText editTextName;
@@ -50,46 +42,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editTelephone;
     private EditText DateBirth;
     private Button buttonSave;
-    private Button mRecordBtn;
-    private TextView mRecordLabel;
     private Button buttonLogout;
-    private MediaRecorder mRecorder;
     private String mFileName = null;
-
+    private Button btnControl, btnClear;
+    private WavAudioRecorder mRecorder;
+    private static final String mRcordFilePath = Environment.getExternalStorageDirectory() + "/testwave.wav";
     //defining a database reference
     private DatabaseReference databaseReference;
-    private static final String LOG_TAG = "Record_log";
-    private StorageReference mStorageRef;
-    private ProgressDialog mProgress;
+    private TextView textDisplay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
-        //mStorage = FirebaseStorage.getReference();
-        mRecordLabel = (TextView) findViewById(R.id.recordLabel);
-        mRecordBtn = (Button) findViewById(R.id.recordBtn);
-        mProgress = new ProgressDialog(this);
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/recorded_audio.3gp";
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        mRecordBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    startRecording();
-
-                    mRecordLabel.setText("Recording Started...");
-                }else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    stopRecording();
-                    mRecordLabel.setText("Recording Stopped...");
-                }
-                return false;
-            }
-        });
-
-         //if the user is not logged in
+        //if the user is not logged in
         //that means current user will return null
         if(firebaseAuth.getCurrentUser() == null){
             //closing this activity
@@ -99,67 +67,82 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
         //getting the database reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
         //getting the views from xml resource
-
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
         editTelephone = (EditText) findViewById(R.id.editTelephone);
         DateBirth = (EditText) findViewById(R.id.editDateBirth);
         buttonSave = (Button) findViewById(R.id.buttonSave);
-
         buttonSave.setOnClickListener(this);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
         //initializing views
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
-
         //displaying logged in user name
         textViewUserEmail.setText("Benvenutto "+user.getEmail() );
-
         //adding listener to button
         buttonLogout.setOnClickListener(this);
+        btnControl = (Button) this.findViewById(R.id.btnControl);
+        btnControl.setText("Start");
+        mRecorder = WavAudioRecorder.getInstanse();
+        mRecorder.setOutputFile(mRcordFilePath);
+        btnControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
+                    mRecorder.prepare();
+                    mRecorder.start();
+                    btnControl.setText("Stop");
+                } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
+                    mRecorder.release();
+                    mRecorder = WavAudioRecorder.getInstanse();
+                    mRecorder.setOutputFile(mRcordFilePath);
+                    btnControl.setText("Start");
+                } else {
+                    mRecorder.stop();
+                    mRecorder.reset();
+                    btnControl.setText("Start");
+                }
+            }
+        });
+        btnClear = (Button) this.findViewById(R.id.btnClear);
+        btnClear.setText("Clear");
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File pcmFile = new File(mRcordFilePath);
+                if (pcmFile.exists()) {
+                    pcmFile.delete();
+                }
+            }
+        });
+        textDisplay = (TextView) this.findViewById(R.id.Textdisplay);
+        textDisplay.setText("recording saved to: " + mRcordFilePath);
+
     }
 
-    private void startRecording() {
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-        try {
-            mRecorder.prepare();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != mRecorder) {
+            mRecorder.release();
         }
-
-        mRecorder.start();
     }
-
-    private void stopRecording() {
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
-        uploadAudio();
-    }
-    private void uploadAudio(){
-        mProgress.setMessage("uploading audio ...");
-        mProgress.show();
-        StorageReference filepath = mStorageRef.child("Audio").child("new_audio.3gp");
-
-        Uri uri = Uri.fromFile(new File(mFileName));
-
-        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    private void uploadAudio() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        Uri file = Uri.fromFile(new File("storage/emulated/0/testwave.wav"));
+        StorageReference riversRef = mStorageRef.child("audio").child(user.getUid()).child("testwave.wav");
+        riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                mProgress.dismiss();
-                mRecordLabel.setText("Uploading Finished");
+
             }
         });
     }
+
 
     private void saveUserInformation() {
         //Getting values from database
@@ -173,6 +156,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
+
 
         //saving data to firebase database
         /*
@@ -200,6 +184,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
         if(view == buttonSave){
             saveUserInformation();
+            uploadAudio();
         }
+
+
     }
 }
