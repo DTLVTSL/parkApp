@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
+    public static boolean registration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //checking if success
                         if(task.isSuccessful()){
                             finish();
+                            registration = true;
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         }else{
                             //display some message here
