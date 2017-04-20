@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Inserisce il tuoi dati"
+            android:text="Inserisce i tuoi dati"
             android:layout_marginTop="20dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -61,7 +61,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Data di nascita" />
+            android:hint="Data di nascita  gg/mm/aa" />
 
 
 
@@ -72,7 +72,7 @@
             android:background="@color/colorPrimary"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="130dp"
-            android:text="Registrarsi" />
+            android:text="Registrare" />
 
 
     </LinearLayout>

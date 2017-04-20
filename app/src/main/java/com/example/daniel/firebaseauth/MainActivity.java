@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //if the email and password are not empty
         //displaying a progress dialog
 
-        progressDialog.setMessage("Registrando utente, Per favore aspettare ...");
+        progressDialog.setMessage("Caricando,per favore aspettare ...");
         progressDialog.show();
 
         //creating a new user

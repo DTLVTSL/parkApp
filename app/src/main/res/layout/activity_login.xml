@@ -26,7 +26,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearance"
-            android:text="Login del Utente"
+            android:text="Login del'Utente"
             android:layout_margin="15dp"
             android:layout_gravity="center_horizontal"/>
 
@@ -56,7 +56,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 
         <TextView
             android:textAlignment="center"
-            android:text="Non hai un account?, Registare qua"
+            android:text="Non hai un account?, Registrati qua"
             android:id="@+id/textViewSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
