@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.os.Environment;
+
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.io.*;
+import java.util.Date;
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,20 +39,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth firebaseAuth;
     private StorageReference mStorageRef;
     //view objects
-    private TextView textViewUserEmail;
+
+    private TextView editCodicFisc;
     private EditText editTextName;
-    private EditText editTextAddress;
-    private EditText editTelephone;
+    private EditText editTextSurname;
     private EditText DateBirth;
     private Button buttonSave;
-    private Button buttonLogout;
-    private String mFileName = null;
-    private Button btnControl, btnClear;
-    private WavAudioRecorder mRecorder;
-    private static final String mRcordFilePath = Environment.getExternalStorageDirectory() + "/testwave.wav";
     //defining a database reference
     private DatabaseReference databaseReference;
-    private TextView textDisplay;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +67,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //getting the database reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
         //getting the views from xml resource
+        editCodicFisc = (EditText) findViewById(R.id.editCodicFisc);
         editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-        editTelephone = (EditText) findViewById(R.id.editTelephone);
+        editTextSurname = (EditText) findViewById(R.id.editTextSurname);
         DateBirth = (EditText) findViewById(R.id.editDateBirth);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this);
@@ -79,80 +78,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         //initializing views
-        textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
-        //displaying logged in user name
-        textViewUserEmail.setText("Benvenutto "+user.getEmail() );
-        //adding listener to button
-        buttonLogout.setOnClickListener(this);
-        btnControl = (Button) this.findViewById(R.id.btnControl);
-        btnControl.setText("Start");
-        mRecorder = WavAudioRecorder.getInstanse();
-        mRecorder.setOutputFile(mRcordFilePath);
-        btnControl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
-                    mRecorder.prepare();
-                    mRecorder.start();
-                    btnControl.setText("Stop");
-                } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
-                    mRecorder.release();
-                    mRecorder = WavAudioRecorder.getInstanse();
-                    mRecorder.setOutputFile(mRcordFilePath);
-                    btnControl.setText("Start");
-                } else {
-                    mRecorder.stop();
-                    mRecorder.reset();
-                    btnControl.setText("Start");
-                }
-            }
-        });
-        btnClear = (Button) this.findViewById(R.id.btnClear);
-        btnClear.setText("Clear");
-        btnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                File pcmFile = new File(mRcordFilePath);
-                if (pcmFile.exists()) {
-                    pcmFile.delete();
-                }
-            }
-        });
-        textDisplay = (TextView) this.findViewById(R.id.Textdisplay);
-        textDisplay.setText("recording saved to: " + mRcordFilePath);
 
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != mRecorder) {
-            mRecorder.release();
-        }
-    }
-    private void uploadAudio() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        Uri file = Uri.fromFile(new File("storage/emulated/0/testwave.wav"));
-        StorageReference riversRef = mStorageRef.child("audio").child(user.getUid()).child("testwave.wav");
-        riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-            }
-        });
-    }
-
 
     private void saveUserInformation() {
         //Getting values from database
         String name = editTextName.getText().toString().trim();
-        String add = editTextAddress.getText().toString().trim();
-        String tel = editTelephone.getText().toString().trim();
+        String sur = editTextSurname.getText().toString().trim();
+        String cod = editCodicFisc.getText().toString().trim();
         String dby = DateBirth.getText().toString().trim();
 
         //creating a userinformation object
-        UserInformation userInformation = new UserInformation(name, add, tel, dby);
+        UserInformation userInformation = new UserInformation(name, sur, cod, dby);
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -173,18 +110,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     //@Override
     public void onClick(View view) {
-        //if logout is pressed
-        if(view == buttonLogout){
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+
         if(view == buttonSave){
             saveUserInformation();
-            uploadAudio();
+            finish();
+            startActivity(new Intent(this, RecordActivity.class));
+
         }
 
 
