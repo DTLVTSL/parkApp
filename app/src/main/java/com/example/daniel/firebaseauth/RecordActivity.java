@@ -1,9 +1,13 @@
 package com.example.daniel.firebaseauth;
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +26,20 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.*;
 import java.util.Date;
+
+
+
+public class RecordActivity extends Fragment {
+    public void voidViewCreated(View view, @Nullable Bundle saveInstanceState){
+        super.onViewCreated(view,saveInstanceState);
+        getActivity().setTitle("Mio profilo");
+
+    }
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        return  inflater.inflate(R.layout.perfil,container,false);
+    }
+}
+
 
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
