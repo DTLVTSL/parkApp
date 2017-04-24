@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Profilo" />
+        <item
+            android:id="@+id/nav_test"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Fai una prova" />
+        <item
+            android:id="@+id/nav_statistics"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Statistica" />
+        <item
+            android:id="@+id/nav_tools"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Ferramenta" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Condividere" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Inviare" />
+        </menu>
+    </item>
+
+</menu>

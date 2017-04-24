@@ -27,8 +27,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".RecordActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".RecordActivity" />
+        <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".statistics"></activity>
     </application>
 
 </manifest>
