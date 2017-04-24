@@ -115,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if(view == buttonSave){
             saveUserInformation();
             finish();
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, NavigationActivity.class));
 
         }
 
