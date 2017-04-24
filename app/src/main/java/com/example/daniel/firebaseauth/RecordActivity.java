@@ -1,4 +1,13 @@
 package com.example.daniel.firebaseauth;
+
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.LayoutAnimationController;
+import java.util.zip.Inflater;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,11 +37,11 @@ import com.google.firebase.storage.UploadTask;
 import java.io.*;
 import java.util.Date;
 
+/**
+ * Created by Jessica on 22/04/17.
+ */
 
-
-public class RecordActivity extends Fragment {
-
-    //firebase auth object
+public class RecordActivity extends Fragment{
     private FirebaseAuth firebaseAuth;
     private StorageReference mStorageRef;
     private Button buttonSend;
@@ -46,12 +55,19 @@ public class RecordActivity extends Fragment {
     //defining a database reference
     private DatabaseReference databaseReference;
 
+    public void voidViewCreated(View view, @Nullable Bundle saveInstanceState){
+        super.onViewCreated(view,saveInstanceState);
+        getActivity().setTitle("Mia prova");
+        //firebase auth object
 
-    //public void voidViewCreated(View view, @Nullable Bundle saveInstanceState){
-      //  super.onViewCreated(view,saveInstanceState);
+        //public void voidViewCreated(View view, @Nullable Bundle saveInstanceState){
+        //  super.onViewCreated(view,saveInstanceState);
         //getActivity().setTitle("Mio profilo");
 
-    //}
+        //}
+
+
+    }
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.activity_record,container,false);
         getActivity().setTitle("Prova");
@@ -78,104 +94,87 @@ public class RecordActivity extends Fragment {
         //initializing views
         ButtonLogout = (TextView) getView().findViewById(R.id.ButtonLogout);
         //adding listener to button
-        ButtonLogout.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                //if logout is pressed
-                if (view == ButtonLogout) {
-                    //logging out the user
-                    firebaseAuth.signOut();
-                    //closing activity
-                    getActivity().finish();
-                    //starting login activity
-                    Intent myIntent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(myIntent);
-
-                }
-            }
-
-        });
+        ButtonLogout(new View.OnClickListener(){
         buttonSend.setText("Start");
         mRecorder = WavAudioRecorder.getInstanse();
         mRecorder.setOutputFile(mRcordFilePath);
         buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
-                    mRecorder.prepare();
-                    mRecorder.start();
-                    buttonSend.setText("Stop");
-                } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
-                    mRecorder.release();
-                    mRecorder = WavAudioRecorder.getInstanse();
-                    mRecorder.setOutputFile(mRcordFilePath);
-                    buttonSend.setText("Start");
-                } else {
-                    mRecorder.stop();
-                    mRecorder.reset();
-                    buttonSend.setText("Start");
-                    uploadAudio();
+                @Override
+                public void onClick(v){
+                    if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
+                        mRecorder.prepare();
+                        mRecorder.start();
+                        buttonSend.setText("Stop");
+                    } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
+                        mRecorder.release();
+                        mRecorder = WavAudioRecorder.getInstanse();
+                        mRecorder.setOutputFile(mRcordFilePath);
+                        buttonSend.setText("Start");
+                    } else {
+                        mRecorder.stop();
+                        mRecorder.reset();
+                        buttonSend.setText("Start");
+                        uploadAudio();
+
+                    }
+
+                });
+                return view;
+    }
+
+                @Override
+                public void onDestroy() {
+                    super.onDestroy();
+                    if (null != mRecorder) {
+                        mRecorder.release();
+                    }
+                }
+            private void uploadAudio() {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                Uri file = Uri.fromFile(new File("storage/emulated/0/"+ fileName));
+                StorageReference riversRef = mStorageRef.child("audio").child(user.getUid()).child(fileName);
+                riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    }
+                });
+            }
+
+
+
+            //@Override
+            public void onClick(View view) {
+                //if logout is pressed
+                if(view ==ButtonLogout){
+                    //logging out the user
+                    firebaseAuth.signOut();
+                    //closing activity
+                        getActivity.finish();
+                        //starting login activity
+                        Intent myIntent = new Intent(this.getActivity().LoginActivity.class)
+                        startActivity(myIntent));
+                    }
+                    if(view == buttonSend){
+                        if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
+                            mRecorder.prepare();
+                        mRecorder.start();
+                        buttonSend.setText("Stop");
+                    } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
+                        mRecorder.release();
+                        mRecorder = WavAudioRecorder.getInstanse();
+                        mRecorder.setOutputFile(mRcordFilePath);
+                        buttonSend.setText("Start");
+                    } else {
+                        mRecorder.stop();
+                        mRecorder.reset();
+                        buttonSend.setText("Start");
+                        uploadAudio();
+
+                    }
 
                 }
-            }
-        });
-        return  view;
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != mRecorder) {
-            mRecorder.release();
-        }
-    }
-    private void uploadAudio() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        Uri file = Uri.fromFile(new File("storage/emulated/0/"+ fileName));
-        StorageReference riversRef = mStorageRef.child("audio").child(user.getUid()).child(fileName);
-        riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
             }
-        });
-    }
-
-
-
-    //@Override
-    public void onClick(View view) {
-        //if logout is pressed
-        if(view == ButtonLogout){
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            getActivity().finish();
-            //starting login activity
-            Intent myIntent = new Intent(this.getActivity(), LoginActivity.class);
-            startActivity(myIntent);
-
         }
-        if(view == buttonSend){
-            if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
-                mRecorder.prepare();
-                mRecorder.start();
-                buttonSend.setText("Stop");
-            } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
-                mRecorder.release();
-                mRecorder = WavAudioRecorder.getInstanse();
-                mRecorder.setOutputFile(mRcordFilePath);
-                buttonSend.setText("Start");
-            } else {
-                mRecorder.stop();
-                mRecorder.reset();
-                buttonSend.setText("Start");
-                uploadAudio();
-
-            }
-
-        }
-
-
-    }
-}
-
