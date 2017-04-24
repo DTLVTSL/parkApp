@@ -14,7 +14,7 @@ public class UserInformation {
     public UserInformation(){
 
     }
-    //
+
 
     public UserInformation(String name, String Surname, String CodiceFiscale, String datebirth) {
         this.name = name;

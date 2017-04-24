@@ -31,8 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Per Registrare la tua voce, clickare sul bottone roso "
-            android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Title" />
+            android:text="Per Registrare la tua voce, clickare sul bottone roso " />
 
         <ImageView
             android:id="@+id/imageView2"
