@@ -1,5 +1,5 @@
 package com.example.daniel.firebaseauth;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.view.View.OnClickListener;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,19 +31,6 @@ import java.util.Date;
 
 
 public class RecordActivity extends Fragment {
-    public void voidViewCreated(View view, @Nullable Bundle saveInstanceState){
-        super.onViewCreated(view,saveInstanceState);
-        getActivity().setTitle("Mio profilo");
-
-    }
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        return  inflater.inflate(R.layout.perfil,container,false);
-    }
-}
-
-
-
-public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -58,33 +46,54 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     //defining a database reference
     private DatabaseReference databaseReference;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    //public void voidViewCreated(View view, @Nullable Bundle saveInstanceState){
+      //  super.onViewCreated(view,saveInstanceState);
+        //getActivity().setTitle("Mio profilo");
+
+    //}
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.activity_record,container,false);
+        getActivity().setTitle("Prova");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
         //if the user is not logged in
         //that means current user will return null
         if(firebaseAuth.getCurrentUser() == null){
             //closing this activity
-            finish();
+            getActivity().finish();
             //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this.getActivity(), LoginActivity.class));
         }
         //getting the database reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
         //getting the views from xml resource
-        buttonSend = (Button) findViewById(R.id.buttonSend);
-        buttonSend.setOnClickListener(this);
+        buttonSend = (Button) getView().findViewById(R.id.buttonSend);
+
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         //initializing views
-        ButtonLogout = (TextView) findViewById(R.id.ButtonLogout);
+        ButtonLogout = (TextView) getView().findViewById(R.id.ButtonLogout);
         //adding listener to button
-        ButtonLogout.setOnClickListener(this);
+        ButtonLogout.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                //if logout is pressed
+                if (view == ButtonLogout) {
+                    //logging out the user
+                    firebaseAuth.signOut();
+                    //closing activity
+                    getActivity().finish();
+                    //starting login activity
+                    Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(myIntent);
+
+                }
+            }
+
+        });
         buttonSend.setText("Start");
         mRecorder = WavAudioRecorder.getInstanse();
         mRecorder.setOutputFile(mRcordFilePath);
@@ -109,8 +118,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-
-
+        return  view;
     }
 
     @Override
@@ -141,9 +149,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             //logging out the user
             firebaseAuth.signOut();
             //closing activity
-            finish();
+            getActivity().finish();
             //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
+            Intent myIntent = new Intent(this.getActivity(), LoginActivity.class);
+            startActivity(myIntent);
+
         }
         if(view == buttonSend){
             if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
@@ -168,3 +178,4 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 }
+
