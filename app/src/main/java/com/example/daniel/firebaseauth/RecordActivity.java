@@ -39,7 +39,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth firebaseAuth;
     private StorageReference mStorageRef;
     private Button buttonSend;
-    private Button buttonLogout;
+   // private Button buttonLogout;
     private String mFileName = null;
     private WavAudioRecorder mRecorder;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
@@ -53,6 +53,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        setTitle("Mio Test");
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
         //if the user is not logged in
@@ -73,9 +74,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         //initializing views
-        buttonLogout = (Button) findViewById(R.id.ButtonLogout);
+        // buttonLogout = (Button) findViewById(R.id.ButtonLogout);
         //adding listener to button
-        buttonLogout.setOnClickListener(this);
+        //buttonLogout.setOnClickListener(this);
         buttonSend.setText("Start");
         mRecorder = WavAudioRecorder.getInstanse();
         mRecorder.setOutputFile(mRcordFilePath);
@@ -94,14 +95,15 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 } else {
                     mRecorder.stop();
                     mRecorder.reset();
-                    buttonSend.setText("Start");
+                    buttonSend.setText("inviando");
                     uploadAudio();
+                    finish();
+                    Intent myIntent =new Intent(getApplicationContext(),StatisticsActivity.class);
+                    startActivity(myIntent);
 
                 }
             }
         });
-
-
     }
 
     @Override
@@ -128,19 +130,20 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     //@Override
     public void onClick(View view) {
         //if logout is pressed
-        if(view == buttonLogout){
+      //  if(view == buttonLogout){
             //logging out the user
-            firebaseAuth.signOut();
+      //      firebaseAuth.signOut();
             //closing activity
-            finish();
+      //      finish();
             //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+      //      startActivity(new Intent(this, LoginActivity.class));
+      //  }
         if(view == buttonSend){
             if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
                 mRecorder.prepare();
                 mRecorder.start();
                 buttonSend.setText("Stop");
+
             } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
                 mRecorder.release();
                 mRecorder = WavAudioRecorder.getInstanse();
@@ -151,11 +154,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 mRecorder.reset();
                 buttonSend.setText("Start");
                 uploadAudio();
-
             }
-
         }
-
-
     }
 }

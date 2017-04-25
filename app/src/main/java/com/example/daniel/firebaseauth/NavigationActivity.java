@@ -17,12 +17,17 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Menu");
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,7 +37,8 @@ public class NavigationActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -74,7 +80,7 @@ public class NavigationActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_profile:
-                Intent i = new Intent(NavigationActivity.this,ProfileActivity.class);
+                Intent i = new Intent(NavigationActivity.this,PerfilActivity.class);
                 startActivity(i);
                 break;
             case R.id.nav_test:
@@ -90,6 +96,14 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_share:
                 break;
             case R.id.nav_send:
+                break;
+            case R.id.nav_logout:
+                //logging out the user
+                firebaseAuth.signOut();
+                //closing activity
+                finish();
+                //starting login activity
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
         //if (fragment != null){

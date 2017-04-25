@@ -2,8 +2,12 @@ package com.example.daniel.firebaseauth;
 
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -26,6 +31,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import android.os.Environment;
+
+import java.text.SimpleDateFormat;
+import java.util.Random;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+
+import com.google.firebase.storage.UploadTask.TaskSnapshot;
+import com.google.android.gms.tasks.OnCompleteListener;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageMetadata;
+
+
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +62,12 @@ import android.widget.Button;
 public class StatisticsActivity extends AppCompatActivity {
     private static final String TAG = StatisticsActivity.class.getSimpleName();
     private GraphView mGraph;
-    private Button ButtonLogout;
+    private Button buttonLogout;
+    private FirebaseAuth firebaseAuth;
+    private StorageReference mStorageRef;
+    private DatabaseReference databaseReference;
+    private Uri downloadUri;
+
 
 
     private static final String PATH_TO_SERVER = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FvaLWsTog6eeqPy83vWbzSEMVvOZ2%2Fteste.csv?alt=media&token=6db9c0a8-14a8-4180-9552-12c96a89a285";
@@ -43,10 +75,28 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        ButtonLogout = (Button) findViewById(R.id.ButtonLogout);
+        setTitle("Le miei statische");
+
+
+        final Button buttonLogout = (Button) findViewById(R.id.ButtonLogout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                if(view == buttonLogout){
+                                                    //closing activity
+                                                    finish();
+                                                    //starting login activity
+                                                    Intent myIntent =new Intent(getApplicationContext(),NavigationActivity.class);
+                                                    startActivity(myIntent);
+                                                }
+
+                                            }
+    });
 
         mGraph = (GraphView) findViewById(R.id.graph);
         Button loadTextButton = (Button)findViewById(R.id.load_file_from_server);
+        //initializing firebase authentication object
+
         loadTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +104,30 @@ public class StatisticsActivity extends AppCompatActivity {
                 downloadFilesTask.execute();
             }
         });
+        if(firebaseAuth.getCurrentUser() == null){
+            //closing this activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        //getting current user
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        //StorageReference riversRef = mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv");
+        mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
+            @Override
+            public void onSuccess (Uri){
+                Uri downloadUri = taskSnapshot.getDownloadUrl();
+                String  generatedFilePath = downloadUri.toString();
+        }
+        }).addOnFailureListener(new OnFailureListener(){
+            @Override
+            public void onFailure(@NonNull Exception exception){
+        }
+        });
+
     }
     private List<String[]> readCVSFromAssetFolder(){
         List<String[]> csvLine = new ArrayList<>();
@@ -136,15 +210,12 @@ public class StatisticsActivity extends AppCompatActivity {
     //@Override
     public void onClick(View view) {
         //if logout is pressed
-        if(view == ButtonLogout){
+        if(view == buttonLogout){
 
             //closing activity
             finish();
             //starting login activity
             startActivity(new Intent(this, NavigationActivity.class));
         }
-
-
-
     }
 }

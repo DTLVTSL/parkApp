@@ -28,12 +28,12 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".RecordActivity"/>
-        <activity android:name=".StatisticsActivity"></activity>
-
+        <activity android:name=".RecordActivity" />
+        <activity android:name=".StatisticsActivity" />
         <activity
             android:name=".NavigationActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PerfilActivity"></activity>
     </application>
 
 </manifest>
