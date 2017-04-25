@@ -78,7 +78,7 @@ public class NavigationActivity extends AppCompatActivity
                 startActivity(i);
                 break;
             case R.id.nav_test:
-                Intent j = new Intent(NavigationActivity.this,ProfileActivity.class);
+                Intent j = new Intent(NavigationActivity.this,RecordActivity.class);
                 startActivity(j);
                 break;
             case R.id.nav_statistics:
