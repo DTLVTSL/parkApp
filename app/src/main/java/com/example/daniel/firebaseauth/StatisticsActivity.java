@@ -114,7 +114,7 @@ public class StatisticsActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
+        TaskSnapshot
         //StorageReference riversRef = mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv");
         mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
             @Override
