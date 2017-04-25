@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             RegisterActivity.registration=false;
             //opening record activity
-            startActivity(new Intent(getApplicationContext(), RecordActivity.class));
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
         }
 
         //initializing views

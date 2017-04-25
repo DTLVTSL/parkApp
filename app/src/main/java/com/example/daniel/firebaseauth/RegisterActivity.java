@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
 
             //and open profile activity
-            startActivity(new Intent(getApplicationContext(), RecordActivity.class));
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);

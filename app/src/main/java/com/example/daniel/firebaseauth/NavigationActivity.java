@@ -1,5 +1,6 @@
 package com.example.daniel.firebaseauth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -68,17 +69,19 @@ public class NavigationActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
     private void displaySelectedScreen(int id ){
-        Fragment fragment = null;
+        //Fragment fragment = null;
+        Intent intent = null;
 
         switch (id){
             case R.id.nav_profile:
-                fragment = new Perfil();
+                Intent i = new Intent(NavigationActivity.this,ProfileActivity.class);
+                startActivity(i);
                 break;
             case R.id.nav_test:
-                fragment = new RecordActivity();
+                Intent j = new Intent(NavigationActivity.this,ProfileActivity.class);
+                startActivity(j);
                 break;
             case R.id.nav_statistics:
-                fragment = new statistics();
                 break;
             case R.id.nav_tools:
                 break;
@@ -87,12 +90,12 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_send:
                 break;
         }
-        if (fragment != null){
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
+        //if (fragment != null){
+        //    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //    ft.replace(R.id.content_frame, fragment);
+        //    ft.commit();
 
-        }
+       // }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
