@@ -3,27 +3,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.MotionEvent;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Random;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +14,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import android.os.Environment;
+
+import java.text.SimpleDateFormat;
+import java.util.Random;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import java.io.IOException;
 import java.io.*;
+import java.util.Date;
 
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,7 +39,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth firebaseAuth;
     private StorageReference mStorageRef;
     private Button buttonSend;
-    private Button ButtonLogout;
+    private Button buttonLogout;
     private String mFileName = null;
     private WavAudioRecorder mRecorder;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
@@ -74,9 +73,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         //initializing views
-        ButtonLogout = (Button)findViewById(R.id.ButtonLogout);
+        buttonLogout = (Button) findViewById(R.id.ButtonLogout);
         //adding listener to button
-        ButtonLogout.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
         buttonSend.setText("Start");
         mRecorder = WavAudioRecorder.getInstanse();
         mRecorder.setOutputFile(mRcordFilePath);
@@ -124,10 +123,12 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+
+
     //@Override
     public void onClick(View view) {
         //if logout is pressed
-        if(view == ButtonLogout){
+        if(view == buttonLogout){
             //logging out the user
             firebaseAuth.signOut();
             //closing activity
