@@ -45,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editTextSurname;
     private EditText DateBirth;
     private Button buttonSave;
+    private String name;
     //defining a database reference
     private DatabaseReference databaseReference;
 
@@ -83,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void saveUserInformation() {
         //Getting values from database
-        String name = editTextName.getText().toString().trim();
+        name = editTextName.getText().toString().trim();
         String sur = editTextSurname.getText().toString().trim();
         String cod = editCodicFisc.getText().toString().trim();
         String dby = DateBirth.getText().toString().trim();
@@ -115,7 +116,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if(view == buttonSave){
             saveUserInformation();
             finish();
-            startActivity(new Intent(this, NavigationActivity.class));
+            Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
+            intent.putExtra("Name",name);
+            startActivity(intent);
 
         }
 

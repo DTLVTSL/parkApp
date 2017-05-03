@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.storage.UploadTask;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -66,7 +67,8 @@ public class StatisticsActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private StorageReference mStorageRef;
     private DatabaseReference databaseReference;
-    private Uri downloadUri;
+    public Uri downloadUri;
+    //public TaskSnapshot taskSnapshot;
 
 
 
@@ -114,19 +116,18 @@ public class StatisticsActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        TaskSnapshot
+
         //StorageReference riversRef = mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv");
-        mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
-            @Override
-            public void onSuccess (Uri){
-                Uri downloadUri = taskSnapshot.getDownloadUrl();
-                String  generatedFilePath = downloadUri.toString();
-        }
-        }).addOnFailureListener(new OnFailureListener(){
-            @Override
-            public void onFailure(@NonNull Exception exception){
-        }
-        });
+        //mStorageRef.child("statistics").child(user.getUid()).child("statistics.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>(){
+            //public void onSuccess (UploadTask.TaskSnapshot taskSnapshot){
+         //       @SuppressWarnings("VisibleForTests") Uri downloadUri = taskSnapshot.getDownloadUrl();
+         //       String  generatedFilePath = downloadUri.toString();
+        //}
+        //}).addOnFailureListener(new OnFailureListener(){
+        //    @Override
+         //   public void onFailure(@NonNull Exception exception){
+        //}
+        //});
 
     }
     private List<String[]> readCVSFromAssetFolder(){
