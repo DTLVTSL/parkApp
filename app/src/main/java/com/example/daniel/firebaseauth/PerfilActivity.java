@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.ViewGroup;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -40,6 +42,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -97,7 +101,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         if (!TextUtils.isEmpty( userId)) {
             if(b != null){
                 name = b.getString("Name");
-                databaseUser.child(id).child(name).child("userId").setValue(userId);
+                databaseUser.child(id).push().setValue(userId);
                 Toast.makeText(this, "Informazione Adjunta", Toast.LENGTH_LONG).show();
             }
 
@@ -132,6 +136,22 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
             });
         }
     }
+    /*public String createImageFromBitmap(Bitmap bitmap) {
+        String fileName = "myImage";//no .png or .jpg needed
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            FileOutputStream fo = openFileOutput(fileName, Context.MODE_PRIVATE);
+            fo.write(bytes.toByteArray());
+            // remember close file output
+            fo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileName = null;
+        }
+        return fileName;
+    }*/
+
     @Override
     public void onClick(View view) {
         if(view == buttonSave){

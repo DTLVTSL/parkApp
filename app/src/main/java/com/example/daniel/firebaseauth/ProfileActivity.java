@@ -57,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+        setTitle("Registrazione");
         //if the user is not logged in
         //that means current user will return null
         if(firebaseAuth.getCurrentUser() == null){
@@ -88,13 +89,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String sur = editTextSurname.getText().toString().trim();
         String cod = editCodicFisc.getText().toString().trim();
         String dby = DateBirth.getText().toString().trim();
-
+        String userId = "userId";
         //creating a userinformation object
-        UserInformation userInformation = new UserInformation(name, sur, cod, dby);
+        UserInformation userInformation = new UserInformation(name, sur, cod, dby,userId);
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
 
         //saving data to firebase database
         /*
@@ -108,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
     }
+
 
 
     //@Override
