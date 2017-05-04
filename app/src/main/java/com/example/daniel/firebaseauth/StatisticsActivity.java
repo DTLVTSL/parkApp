@@ -17,6 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.StreamDownloadTask;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -47,6 +50,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.os.Environment;
+import  com.google.firebase.storage.StorageTask;
 
 
 public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -56,7 +60,9 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     //firebase auth object
     private FirebaseAuth firebaseAuth;
     private StorageReference storageRef;
-    private Uri myuri;
+    //private Uri myuri;
+    private String generatedFilepath;
+    //private Uri downloadUri;
 
 
     //private static final String PATH_TO_SERVER = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f";
@@ -80,8 +86,14 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference();
-        myuri = storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
-
+        //storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
+        storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                generatedFilepath = uri.toString();
+                Log.i(generatedFilepath,"URL link" );
+            }
+        });
 
         mGraph = (GraphView) findViewById(R.id.graph);
         Button loadTextButton = (Button)findViewById(R.id.load_file_from_server);
@@ -154,9 +166,10 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         String[] content = null;
 
         try {
-
+            mUrl = new URL(generatedFilepath);
            // mUrl = new URL(myuri.toString());
-            mUrl = new URL("https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f");
+           // mUrl = new URL("https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f");mUrl = new URL(
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
