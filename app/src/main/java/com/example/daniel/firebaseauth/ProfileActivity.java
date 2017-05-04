@@ -103,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         * and then for that user under the unique id we are saving data
         * for saving data we are using setvalue method this method takes a normal java object
         * */
-        databaseReference.child(user.getUid()).setValue(userInformation);
+        databaseReference.child(user.getUid()).child("profile").setValue(userInformation);
 
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
