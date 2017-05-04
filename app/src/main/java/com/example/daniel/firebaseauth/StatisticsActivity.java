@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.*;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private Uri myuri;
 
 
-    private static final String PATH_TO_SERVER = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FvaLWsTog6eeqPy83vWbzSEMVvOZ2%2Fteste.csv?alt=media&token=6db9c0a8-14a8-4180-9552-12c96a89a285";
+    //private static final String PATH_TO_SERVER = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +77,10 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             startActivity(new Intent(this, LoginActivity.class));
         }
 
+        //getting current user
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        storageRef = FirebaseStorage.getInstance().getReference();
+        myuri = storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
 
 
         mGraph = (GraphView) findViewById(R.id.graph);
@@ -145,18 +149,14 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     }
     private List<String[]> downloadRemoteTextFileContent(){
         URL mUrl = null;
-        Uri myuri = null;
+        //Uri myuri = null;
         List<String[]> csvLine = new ArrayList<>();
         String[] content = null;
-        //getting current user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        myuri = storageRef.child("storage").child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
+
         try {
 
-
-            mUrl = new URL(myuri.toString());
-            //System.out.println("a: " + mUrl);
-            // mUrl = new URL("https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FvaLWsTog6eeqPy83vWbzSEMVvOZ2%2Fteste.csv?alt=media&token=6db9c0a8-14a8-4180-9552-12c96a89a285");
+           // mUrl = new URL(myuri.toString());
+            mUrl = new URL("https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -175,6 +175,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         }
         return csvLine;
     }
+
     //@Override
     public void onClick(View view) {
         //if logout is pressed
