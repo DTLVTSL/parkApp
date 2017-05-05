@@ -32,6 +32,16 @@ import java.io.IOException;
 import java.io.*;
 import java.util.Date;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +63,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+
         setTitle("Mio Test");
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -97,6 +108,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                     mRecorder.reset();
                     buttonSend.setText("inviando");
                     uploadAudio();
+                    sendlink();
                     finish();
                     Intent myIntent =new Intent(getApplicationContext(),StatisticsActivity.class);
                     startActivity(myIntent);
@@ -114,17 +126,44 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     private void uploadAudio() {
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
         Uri file = Uri.fromFile(new File("storage/emulated/0/"+ fileName));
         StorageReference riversRef = mStorageRef.child("audio").child(user.getUid()).child(fileName);
+
         riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
             }
         });
+
     }
 
+    private void sendlink(){
+
+
+        String url = "http://requestb.in/19jvhot1";
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //This code is executed if the server responds, whether or not the response contains data.
+                //The String 'response' contains the server's response.
+            }},new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //This code is executed if there is an error.
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> MyData = new HashMap<String, String>();
+                MyData.put("Field", "Value"); //Add the data you'd like to send to the server.
+                return MyData;
+
+            }};
+        MyRequestQueue.add(MyStringRequest);
+        }
 
 
     //@Override
@@ -144,7 +183,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 mRecorder.start();
                 buttonSend.setText("Stop");
 
-            } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
+
+
+        } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
                 mRecorder.release();
                 mRecorder = WavAudioRecorder.getInstanse();
                 mRecorder.setOutputFile(mRcordFilePath);
