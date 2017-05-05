@@ -6,5 +6,17 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pepito">
+        proggetata per aiutare alle persone che
+        hanno malatia di Parkinson, per tenere un
+        seguemento del livello di sviluppo della
+        sua malatia.
+
+        La proba consiste semplicemente di fare
+        registrare la tua voce, facendo click
+        in Fare una prova"</string>
+
 
 </resources>

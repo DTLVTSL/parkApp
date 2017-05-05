@@ -22,6 +22,8 @@ android {
 repositories {
 
     maven { url "https://jitpack.io" }
+    jcenter()
+    mavenCentral()
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -29,6 +31,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //compile 'com.android.support.constraint:constraint-layout:1.0.2.backup'
+    
+
+    // If you want to use the GPU Filters
     compile 'com.google.firebase:firebase-auth:10.2.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.google.android.gms:play-services-auth:10.2.1'
@@ -37,9 +42,13 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.google.firebase:firebase-storage:10.2.1'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:design:25.3.1'
     compile 'junit:junit:4.12'
     compile 'com.jjoe64:graphview:4.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'

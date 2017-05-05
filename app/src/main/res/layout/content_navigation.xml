@@ -12,10 +12,39 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.daniel.firebaseauth.NavigationActivity"
     tools:showIn="@layout/app_bar_navigation">
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="15dp"
+        app:srcCompat="@mipmap/logoparkinson"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="100dp" />
 
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearance"
+        android:text="@string/pepito"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center_horizontal" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="Fare una prova"
+        android:onClick="onClick_nci"/>
 
 </RelativeLayout>

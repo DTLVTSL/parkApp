@@ -16,26 +16,48 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
+import android.content.Context;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.net.Uri;
+import java.lang.String;
 
+import com.bumptech.glide.Glide;
+import android.graphics.Bitmap;
+import android.content.Context;
+import android.graphics.Paint;
+import com.bumptech.glide.load.Transformation;
+import android.graphics.Canvas;
+import android.graphics.BitmapShader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.BitmapResource;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements  NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth firebaseAuth;
+    private StorageReference storageRef;
     private Bundle b;
     private String name;
     private TextView profileName;
     private String uName = "";
     private UserInformation user = null;
+    private ImageView photoProfile;
+    private String url;
+    Context context;
 
 
     @Override
@@ -64,9 +86,22 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         profileName = (TextView) headerView.findViewById(R.id.nameProfile);
+        photoProfile = (ImageView) headerView.findViewById(R.id.photoProfile);
         profileName.setText(userInfo.getEmail());
         //username =(TextView) headerView.findViewById(R.id.username);
         b = getIntent().getExtras();
+        storageRef = FirebaseStorage.getInstance().getReference();
+        //url = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/photosProfile%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2F142212?alt=media&token=5e905df7-5ec2-468f-abd1-2de66dfc4fed";
+        StorageReference newStorageRef = storageRef.child("photosProfile").child(userInfo.getUid()).child("imagineProfile.jpg");
+        Glide.with(getApplicationContext()).using(new FirebaseImageLoader()).load(newStorageRef).bitmapTransform(new CropCircleTransformation(context)).into(photoProfile);
+
+        /*storageRef.child("photosProfile").child(user.getUserId()).child("142212.jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.i("Main", "File uri: " + uri.toString());
+            }
+        });/*
+
         //profileName.setText(u.getDisplayName());
         /*if(b != null){
             name = b.getString("Name");
@@ -75,42 +110,6 @@ public class NavigationActivity extends AppCompatActivity
         }*/
 
     }
-    /*@Override
-    public void onStart() {
-        super.onStart();
-
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference dru = mDatabase.child(userInfo.getUid());
-
-        ValueEventListener userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserInformation us1 = dataSnapshot.getValue(UserInformation.class);
-                user = us1;
-
-
-                //String u=UserInformation.getUserName();
-                String u=us1.getUserName()+" "+us1.getUserSurname();
-                uName = u;
-                profileName.setText(us1.getUserName());
-
-                //email.setText(us1.getEmail());
-
-                //listDataChild.get(listDataHeader.get(1)).clear();
-                //for(com.example.sanliu.Database.User.Group g:us1.getGroups().values())
-                 //   listDataChild.get(listDataHeader.get(1)).add(g);
-
-                //((ExpandableListAdapter)expListView.getAdapter()).notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-
-        dru.addValueEventListener(userListener);
-
-    }*/
 
     @Override
     public void onBackPressed() {

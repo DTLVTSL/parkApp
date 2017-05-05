@@ -114,7 +114,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
             Uri imageUri = data.getData();
             FirebaseUser user = firebaseAuth.getCurrentUser();
             imageView2.setImageURI(imageUri);
-            StorageReference filepath = mStorage.child("photosProfile").child(user.getUid()).child(imageUri.getLastPathSegment());
+            StorageReference filepath = mStorage.child("photosProfile").child(user.getUid()).child("imagineProfile.jpg");
             filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>(){
                 public void onSuccess(  UploadTask.TaskSnapshot taskSnapshot){
                     Toast.makeText(PerfilActivity.this, "Upload Done ",Toast.LENGTH_LONG).show();
