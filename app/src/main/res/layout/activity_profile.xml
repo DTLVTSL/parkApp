@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp">
 
 
         <TextView
@@ -21,18 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Inserisce i tuoi dati"
+            android:text="Compila i seguenti spazi"
             android:layout_marginTop="20dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <EditText
-            android:id="@+id/editCodicFisc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Codice Fiscale" />
 
         <EditText
             android:id="@+id/editTextName"
@@ -53,6 +46,15 @@
             android:hint="Scrivi cognome" />
 
         <EditText
+            android:id="@+id/editCodicFisc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Codice Fiscale" />
+
+        <EditText
             android:id="@+id/editDateBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +65,28 @@
             android:layout_marginRight="20dp"
             android:hint="Data di nascita  gg/mm/aa" />
 
+        <EditText
+            android:id="@+id/editsex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Sesso" />
 
+        <TextView
+            android:id="@+id/Messag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Codice Medico" />
+
+        <Spinner
+            android:id="@+id/codmed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/buttonSave"

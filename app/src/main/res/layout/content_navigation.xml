@@ -47,4 +47,13 @@
         android:text="Fare una prova"
         android:onClick="onClick_nci"/>
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="15dp"
+        app:srcCompat="@mipmap/logoparkinson"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="100dp" />
+
 </RelativeLayout>
