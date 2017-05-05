@@ -59,6 +59,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     //defining a database reference
     private DatabaseReference databaseReference;
 
+    private String generatedFilepath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         buttonSend = (Button) findViewById(R.id.buttonSend);
         buttonSend.setOnClickListener(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
+
 
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -141,8 +144,16 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void sendlink(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-
+        //storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
+        mStorageRef.child("audio").child(user.getUid()).child(fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                generatedFilepath = uri.toString();
+                Log.i(generatedFilepath,"URL link" );
+            }
+        });
         String url = "http://requestb.in/19jvhot1";
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -156,9 +167,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 //This code is executed if there is an error.
             }
         }){
+            //How to put generatedFilepath  link inside the map???????in the line 173 #daniel
             protected Map<String, String> getParams(){
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("Field", "Value"); //Add the data you'd like to send to the server.
+                MyData.put("link","sss");
                 return MyData;
 
             }};

@@ -21,6 +21,7 @@ import android.widget.Button;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.StreamDownloadTask;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -139,9 +140,14 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             Log.d(TAG, "Output " + Integer.parseInt(rows[0]) + " " + Integer.parseInt(rows[1]));
             dataPoints[i] = new DataPoint(Integer.parseInt(rows[0]), Integer.parseInt(rows[1]));
         }
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(dataPoints);
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPoints);
         mGraph.addSeries(series);
+        // legend
+        series.setTitle("UPDRS GRADE");
+        mGraph.getLegendRenderer().setVisible(true);
+        mGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
     }
+    /*
     private void createBarChartGraph(List<String[]> result){
         DataPoint[] dataPoints = new DataPoint[result.size()];
         for (int i = 0; i < result.size(); i++){
@@ -159,6 +165,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         });
         series.setSpacing(50);
     }
+      */
     private List<String[]> downloadRemoteTextFileContent(){
         URL mUrl = null;
         //Uri myuri = null;
