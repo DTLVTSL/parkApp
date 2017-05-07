@@ -175,6 +175,13 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_tools:
                 break;
             case R.id.nav_share:
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody =  "Scrivi qua il tuo messagio";
+                String shareSub = "Scrivi il objecto del messagio";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
+                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(myIntent,"Condividendo"));
                 break;
             case R.id.nav_send:
                 break;
