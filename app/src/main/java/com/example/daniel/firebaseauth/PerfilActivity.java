@@ -53,8 +53,8 @@ import java.util.List;
 
 public class PerfilActivity extends AppCompatActivity implements View.OnClickListener {
     private Button buttonSave;
-    private Button mSelectImage;
-    private Button mSelectImageCamera;
+    private ImageButton mSelectImage;
+    private ImageButton mSelectImageCamera;
     private ImageView imageView2;
     private EditText editTextUserId;
     private static final int CAMERA_REQUEST = 1;
@@ -81,8 +81,8 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         buttonSave = (Button) findViewById(R.id.buttonSave);
 
 
-        mSelectImage = (Button) findViewById(R.id.selectImage);
-        mSelectImageCamera = (Button) findViewById(R.id.selectImageCamera);
+        mSelectImage = (ImageButton) findViewById(R.id.selectImage);
+        mSelectImageCamera = (ImageButton) findViewById(R.id.selectImageCamera);
         imageView2 = (ImageView) findViewById(R.id.imageView2);
 
         editTextUserId = (EditText) findViewById(R.id.editTextUserId);

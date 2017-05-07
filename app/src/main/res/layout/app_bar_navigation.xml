@@ -20,6 +20,19 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_navigation" />
+    <include layout="@layout/content_navigation"
+        android:id="@+id/include" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="400dp"
+        android:gravity="center"
+        android:text="Fare una prova" />
+
 
 </android.support.design.widget.CoordinatorLayout>

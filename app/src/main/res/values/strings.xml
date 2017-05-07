@@ -9,14 +9,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pepito">
-        proggetata per aiutare alle persone che
-        hanno malatia di Parkinson, per tenere un
-        seguemento del livello di sviluppo della
-        sua malatia.
+        Parkinson Application è stata
+        progetata per aiutare le persone
+        che soffrono del morbo di Parkinson,
+        monitorando lo sviluppo della
+        propia malattia.
 
-        La proba consiste semplicemente di fare
-        registrare la tua voce, facendo click
-        in Fare una prova"</string>
+        La prova consiste semplicemente nel
+        registrare la tua voce, doppo aver
+        cliccato il bottone - Fare una prova - "</string>
 
 
 </resources>

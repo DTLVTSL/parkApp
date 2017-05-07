@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.content.Context;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -94,7 +95,16 @@ public class NavigationActivity extends AppCompatActivity
         //url = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/photosProfile%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2F142212?alt=media&token=5e905df7-5ec2-468f-abd1-2de66dfc4fed";
         StorageReference newStorageRef = storageRef.child("photosProfile").child(userInfo.getUid()).child("imagineProfile.jpg");
         Glide.with(getApplicationContext()).using(new FirebaseImageLoader()).load(newStorageRef).bitmapTransform(new CropCircleTransformation(context)).into(photoProfile);
-
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent myIntent = new Intent(NavigationActivity.this, RecordActivity.class);
+                startActivity(myIntent);
+            }
+        });
         /*storageRef.child("photosProfile").child(user.getUserId()).child("142212.jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Uri uri) {

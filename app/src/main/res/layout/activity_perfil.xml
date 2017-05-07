@@ -42,7 +42,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="119dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/Imagine"
@@ -53,22 +54,22 @@
                 android:layout_marginTop="20dp"
                 android:text="Inserti una imagine di Profilo " />
 
-            <Button
+            <ImageButton
                 android:id="@+id/selectImage"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_width="73dp"
+                android:layout_height="43dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Gallery " />
+                android:background="@drawable/ic_menu_gallery" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/selectImageCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:text="Camera" />
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/ic_menu_camera"
+                android:layout_weight="0.48" />
 
         </LinearLayout>
 
