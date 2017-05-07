@@ -66,7 +66,7 @@
             android:hint="Data di nascita  gg/mm/aa" />
 
         <EditText
-            android:id="@+id/editsex"
+            android:id="@+id/editTextgender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textShortMessage"
@@ -75,18 +75,7 @@
             android:layout_marginRight="20dp"
             android:hint="Sesso" />
 
-        <TextView
-            android:id="@+id/Messag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Codice Medico" />
 
-        <Spinner
-            android:id="@+id/codmed"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/buttonSave"

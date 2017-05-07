@@ -147,7 +147,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         mGraph.getLegendRenderer().setVisible(true);
         mGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
     }
-    /*
+
     private void createBarChartGraph(List<String[]> result){
         DataPoint[] dataPoints = new DataPoint[result.size()];
         for (int i = 0; i < result.size(); i++){
@@ -165,7 +165,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         });
         series.setSpacing(50);
     }
-      */
+
     private List<String[]> downloadRemoteTextFileContent(){
         URL mUrl = null;
         //Uri myuri = null;

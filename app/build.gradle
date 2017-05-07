@@ -49,5 +49,14 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    // Single target that includes all FirebaseUI libraries
+    compile 'com.firebaseui:firebase-ui:0.4.0'
+
+// FirebaseUI Database only
+    compile 'com.firebaseui:firebase-ui-database:0.4.0'
+
+// FirebaseUI Auth only
+    compile 'com.firebaseui:firebase-ui-auth:0.4.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

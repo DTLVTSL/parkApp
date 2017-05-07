@@ -1,6 +1,7 @@
 package com.example.daniel.firebaseauth;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -36,10 +38,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import java.io.IOException;
-import java.io.*;
-import java.util.Date;
+
+
+
+
 
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -53,12 +55,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editTextName;
     private EditText editTextSurname;
     private EditText DateBirth;
+    private EditText gender;
     private Button buttonSave;
-    private String name;
+   // private String name;
 
     //defining a database reference
     private DatabaseReference databaseReference;
-
+    //private FirebaseListAdapter <Medici> FirebaseListAdapter;
 
 
     @Override
@@ -83,51 +86,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextSurname = (EditText) findViewById(R.id.editTextSurname);
         DateBirth = (EditText) findViewById(R.id.editDateBirth);
+        gender = (EditText) findViewById(R.id.editTextgender);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         //getting current user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();}
         //initializing views
-
-        databaseReference.child("Medici").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Is better to use a List, because you don't know the size
-                // of the iterator returned by dataSnapshot.getChildren() to
-                // initialize the array
-                final List<String> areas = new ArrayList<String>();
-
-
-                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-                    String areaName = areaSnapshot.child("Medici").getValue(String.class);
-                    areas.add(areaName);
-                }
-
-                Spinner areaSpinner = (Spinner) findViewById(R.id.codmed);
-                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(ProfileActivity.this,android.R.layout.simple_spinner_item, areas);
-                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                areaSpinner.setAdapter(areasAdapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
     private void saveUserInformation() {
         //Getting values from database
-        name = editTextName.getText().toString().trim();
+        String name = editTextName.getText().toString().trim();
         String sur = editTextSurname.getText().toString().trim();
         String cod = editCodicFisc.getText().toString().trim();
         String dby = DateBirth.getText().toString().trim();
-        String userId = "userId";
+        String gen = gender.getText().toString().trim();
+       // String userId = "userId";
         //creating a userinformation object
-        UserInformation userInformation = new UserInformation(name, sur, cod, dby,userId);
+        UserInformation userInformation = new UserInformation(name, sur, cod, dby,gen);
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -139,12 +117,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         * and then for that user under the unique id we are saving data
         * for saving data we are using setvalue method this method takes a normal java object
         * */
-        databaseReference.child(user.getUid()).child("profile").setValue(userInformation);
+        databaseReference.child("users").child(user.getUid()).child("profile").setValue(userInformation);
 
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
     }
-
 
 
     //@Override
@@ -154,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             saveUserInformation();
             finish();
             Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
-            intent.putExtra("Name",name);
+            //intent.putExtra("Name",editTextName);
             startActivity(intent);
 
         }
