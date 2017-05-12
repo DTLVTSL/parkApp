@@ -87,7 +87,6 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference();
-        //storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
         storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

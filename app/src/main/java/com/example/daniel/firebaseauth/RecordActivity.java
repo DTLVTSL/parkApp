@@ -154,8 +154,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 Log.i(generatedFilepath,"URL link" );
             }
         });
-
-        String url = "http://requestb.in/19jvhot1";
+        final String url = "http://requestb.in/19jvhot1";
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -171,7 +170,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             //How to put generatedFilepath  link inside the map???????in the line 173 #daniel
             protected Map<String, String> getParams(){
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("link","batata doce");
+                MyData.put("link","sss");
                 return MyData;
 
             }};
