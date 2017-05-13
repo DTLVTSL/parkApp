@@ -145,16 +145,17 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
     private void sendlink(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        String id =user.getUid();
 
         //storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().getResult();
-        mStorageRef.child("audio").child(user.getUid()).child(fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        mStorageRef.child("audio").child(id).child(fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 generatedFilepath = uri.toString();
                 Log.i(generatedFilepath,"URL link" );
             }
         });
-        final String url = "http://requestb.in/19jvhot1";
+        final String url = "http://requestb.in/11m12ml1";
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -169,11 +170,14 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }){
             //How to put generatedFilepath  link inside the map???????in the line 173 #daniel
             protected Map<String, String> getParams(){
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                String id =user.getUid();
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("link","sss");
+                MyData.put("link:   "+ url, "key:   "+id);
                 return MyData;
 
-            }};
+            }
+        };
         MyRequestQueue.add(MyStringRequest);
         }
 
