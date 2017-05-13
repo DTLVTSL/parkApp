@@ -173,7 +173,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String id =user.getUid();
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("link:   "+ url, "key:   "+id);
+                String link ="link";
+                String idi = "id";
+                MyData.put(link, url);
+                MyData.put(idi,id);
                 return MyData;
 
             }
