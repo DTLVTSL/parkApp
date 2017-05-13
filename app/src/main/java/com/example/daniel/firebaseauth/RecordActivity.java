@@ -140,7 +140,6 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
-
     }
 
     private void sendlink(){
@@ -187,23 +186,12 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
     //@Override
     public void onClick(View view) {
-        //if logout is pressed
-      //  if(view == buttonLogout){
-            //logging out the user
-      //      firebaseAuth.signOut();
-            //closing activity
-      //      finish();
-            //starting login activity
-      //      startActivity(new Intent(this, LoginActivity.class));
-      //  }
+
         if(view == buttonSend){
             if (WavAudioRecorder.State.INITIALIZING == mRecorder.getState()) {
                 mRecorder.prepare();
                 mRecorder.start();
                 buttonSend.setText("Stop");
-
-
-
         } else if (WavAudioRecorder.State.ERROR == mRecorder.getState()) {
                 mRecorder.release();
                 mRecorder = WavAudioRecorder.getInstanse();
