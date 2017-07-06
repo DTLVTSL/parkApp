@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.os.Environment;
 
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import com.google.firebase.database.DatabaseReference;
@@ -56,11 +57,12 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     Date now = new Date();
     String fileName = formatter.format(now) + ".wav";
     private final String mRcordFilePath = Environment.getExternalStorageDirectory() + "/"+ fileName ;
+
     //defining a database reference
     private DatabaseReference databaseReference;
 
     private String generatedFilepath;
-
+    private String generatedFilepathB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,9 +154,13 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             public void onSuccess(Uri uri) {
                 generatedFilepath = uri.toString();
                 Log.i(generatedFilepath,"URL link" );
+
             }
         });
-        final String url = "http://requestb.in/11m12ml1";
+
+
+
+        final String url = "http://172.20.242.17:5000/"; //"https://requestb.in/s1bm34s1"
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -169,13 +175,18 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }){
             //How to put generatedFilepath  link inside the map???????in the line 173 #daniel
             protected Map<String, String> getParams(){
+
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String id =user.getUid();
+                String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
+                String myUrl = "http://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
                 Map<String, String> MyData = new HashMap<String, String>();
-                String link ="link";
-                String idi = "id";
-                MyData.put(link, url);
+                String link ="audio_url";
+                String idi = "codicePaziente";
+                String idii = "audio_position";
+                MyData.put(link, myUrl);
                 MyData.put(idi,id);
+                MyData.put(idii,audio_pos);
                 return MyData;
 
             }

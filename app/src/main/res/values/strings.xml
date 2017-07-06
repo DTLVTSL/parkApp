@@ -9,15 +9,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pepito">
-        Parkinson Application è stata
-        progetata per aiutare le persone
-        che soffrono del morbo di Parkinson,
-        monitorando lo sviluppo della
-        propia malattia.
-
-        La prova consiste semplicemente nel
-        registrare la tua voce, doppo aver
-        cliccato il bottone - Fare una prova - "</string>
+	PARKINSON-APP è ideata per aiutare le persone affette dal morbo di Parkinson,
+	monitorando l’andamento della malattia attraverso l’uso della voce!
+	Registra la tua voce e ottieni il tuo punteggio!
+	Anche il tuo medico di fiducia potrà controllare i tuoi risultati.
+	Inizia subito cliccando qui sotto - FAI UNA PROVA - "</string>
 
 
 </resources>
