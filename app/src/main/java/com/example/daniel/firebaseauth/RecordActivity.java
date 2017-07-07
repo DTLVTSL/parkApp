@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.os.Bundle;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,12 @@ import android.os.Environment;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Random;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -221,8 +226,30 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }  */
 
         try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ServerRef = database.getReference().child("Server").child("ip");
+            ServerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Server server = dataSnapshot.getValue(Server.class);
+                    String Ip = server.getIP();
+                    Log.i("IP", Ip);
+                    if(dataSnapshot.hasChild("ip")){
+
+                    }
+                   // String IP = (String)dataSnapshot.child("Server").child("ip").getValue();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            final String url = "http://172.20.242.72:5000/";//https://requestb.in/1c6oc3c1"https://172.20.242.72:5000/
+            final String url = "http://" + ":5000/"; //https://requestb.in/1c6oc3c1
             String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
             String myUrl = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
             JSONObject jsonBody = new JSONObject();
