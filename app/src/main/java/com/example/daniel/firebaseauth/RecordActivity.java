@@ -15,6 +15,10 @@ import android.widget.Toast;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +43,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -144,6 +151,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+
+
+
     private void sendlink(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String id =user.getUid();
@@ -159,8 +169,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-
-        final String url = "http://172.20.242.17:5000/"; //"https://requestb.in/s1bm34s1"
+        /*
+        final String url = "https://requestb.in/1c6oc3c1";//https://requestb.in/1c6oc3c1"https://172.20.242.72:5000/
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -174,25 +184,116 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             }
         }){
             //How to put generatedFilepath  link inside the map???????in the line 173 #daniel
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
+                // Inner object
+                Map<String, String> params = new HashMap<String, String>();
 
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String id =user.getUid();
+
                 String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
-                String myUrl = "http://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
+                String myUrl = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
                 Map<String, String> MyData = new HashMap<String, String>();
                 String link ="audio_url";
                 String idi = "codicePaziente";
                 String idii = "audio_position";
+
                 MyData.put(link, myUrl);
                 MyData.put(idi,id);
                 MyData.put(idii,audio_pos);
-                return MyData;
+                JSONObject userJSON = new JSONObject(MyData);
+                // Nest the object at "user"
+               // params.put("data", userJSON.toString());
 
+                return params;
+
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
             }
         };
         MyRequestQueue.add(MyStringRequest);
-        }
+
+        }  */
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            final String url = "http://172.20.242.72:5000/";//https://requestb.in/1c6oc3c1"https://172.20.242.72:5000/
+            String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
+            String myUrl = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
+            JSONObject jsonBody = new JSONObject();
+            String link ="audio_url";
+            String idi = "codicePaziente";
+            String idii = "audio_position";
+
+            jsonBody.put(link, myUrl);
+            jsonBody.put(idi,id);
+            jsonBody.put(idii,audio_pos);
+            final String requestBody = jsonBody.toString();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("VOLLEY", response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    }
+                }
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null) {
+                        responseString = String.valueOf(response.statusCode);
+                        // can get more details such as response.headers
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+
+            requestQueue.add(stringRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //@Override
