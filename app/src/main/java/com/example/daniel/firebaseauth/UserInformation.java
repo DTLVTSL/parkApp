@@ -11,6 +11,7 @@ public class UserInformation {
     public String CodiceFiscale;
     public String datebirth;
     public String gender;
+    public String CodiceMedico;
    // public String userId;
 
     public UserInformation(){
@@ -18,12 +19,13 @@ public class UserInformation {
     }
 
 
-    public UserInformation(String name, String Surname, String CodiceFiscale, String datebirth, String gender) {
+    public UserInformation(String name, String Surname, String CodiceFiscale, String datebirth, String gender, String CodiceMedico) {
         this.name = name;
         this.Surname = Surname;
         this.CodiceFiscale = CodiceFiscale;
         this.datebirth = datebirth;
         this.gender = gender;
+        this.CodiceMedico = CodiceMedico;
        // this.userId = userId;
     }
 

@@ -106,7 +106,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
             }
 
         } else {
-            Toast.makeText(this, "You should enter  a name of your Group", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Deve scrivere", Toast.LENGTH_LONG).show();
         }
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
