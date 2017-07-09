@@ -64,6 +64,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     //firebase auth object
     private FirebaseAuth firebaseAuth;
     private StorageReference mStorageRef;
+    private DatabaseReference DataRef;
     private Button buttonSend;
     // private Button buttonLogout;
     private String mFileName = null;
@@ -77,6 +78,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private DatabaseReference databaseReference;
     Uri downloadUri;
     public String generatedFilepath;
+    public String ip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,26 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
 
         //getting current user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ServerRef = database.getReference().child("Server");
+        ServerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ip = (String)dataSnapshot.child("teste").getValue();
+                Log.i("666",ip);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
         //initializing views
         // buttonLogout = (Button) findViewById(R.id.ButtonLogout);
         //adding listener to button
@@ -167,7 +188,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 generatedFilepath = downloadUrl.toString(); /// The string(file link) that you need
 
                 Log.d("link de download", generatedFilepath);
-                Toast.makeText(RecordActivity.this, "Inviato" + generatedFilepath, Toast.LENGTH_LONG).show();
+                Toast.makeText(RecordActivity.this, "link enviado" + generatedFilepath, Toast.LENGTH_LONG).show();
                 sendlink();
 
                 //}
@@ -192,11 +213,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ServerRef = database.getReference().child("Server").child("teste");
+
             FirebaseUser user = firebaseAuth.getCurrentUser();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            final String url = "https://requestb.in/1mq7j9f1"; //https://requestb.in/1mq7j9f1
+            final String url = "https://requestb.in/"+ip; //https://requestb.in/1mq7j9f1
 
             Log.i("URL",url );
             String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
