@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.daniel.firebaseauth.R.id.action_context_bar;
+import static com.example.daniel.firebaseauth.R.id.editCodiceMedico;
 import static com.example.daniel.firebaseauth.R.id.progressBar;
 
 
@@ -122,6 +123,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
+
 
         //initializing views
         // buttonLogout = (Button) findViewById(R.id.ButtonLogout);
@@ -217,9 +219,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             String idii = "audio_position";
             String id = user.getUid();
 
+
             jsonBody.put(link, generatedFilepath);
             jsonBody.put(idi,id);
             jsonBody.put(idii,audio_pos);
+
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
