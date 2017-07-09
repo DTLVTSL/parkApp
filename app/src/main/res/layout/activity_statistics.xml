@@ -12,25 +12,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.daniel.firebaseauth.StatisticsActivity">
 
-    <Button
-        android:id="@+id/load_file_from_server"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="clica qui per guardare suo grado UPDRS" />
+        android:layout_height="match_parent">
 
-    <com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="300dip"
-        android:layout_marginTop="24dp"
-        android:id="@+id/graph" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/ButtonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="ritorna al menu" />
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
+                android:layout_width="match_parent"
+                android:layout_height="300dip"
+                android:layout_marginTop="24dp" />
+
+            <Button
+                android:id="@+id/load_file_from_server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="clica qui per guardare suo grado UPDRS" />
+
+            <ListView
+                android:id="@+id/ListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/ButtonLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="ritorna al menu" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -16,8 +16,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Button;
-
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.StreamDownloadTask;
 import com.jjoe64.graphview.GraphView;
@@ -51,6 +56,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.os.Environment;
+import android.widget.ListView;
+
 import  com.google.firebase.storage.StorageTask;
 
 
@@ -58,8 +65,14 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     private static final String TAG = StatisticsActivity.class.getSimpleName();
     private GraphView mGraph;
     private Button ButtonLogout;
+    ListView listview;
+    ArrayList<String> list = new ArrayList<>();
+
+    ArrayAdapter<String> adapter;
+    private DatabaseReference dref;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+
     private StorageReference storageRef;
     //private Uri myuri;
     private String generatedFilepath;
@@ -86,6 +99,60 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
+
+
+        //Firebase.setAndroidContext(this);
+
+        //listview = (ListView) findViewById(R.id.ListView);
+        //objetoRef = new Firebase ("https://parkinsonapp-7b987.firebaseio.com");
+        //Firebase novaRef= objetoRef.child("users").child(user.getUid()).child("results");
+
+        /*FirebaseListAdapter<String> adapter =   new FirebaseListAdapter<String>(this,String.class,android.R.layout.simple_list_item_1,novaRef) {
+            @Override
+            protected void populateView(View v, String s, int position) {
+                TextView text = (TextView) v.findViewById(android.R.id.text1);
+                text.setText(s);
+
+            }
+        };
+
+        listview.setAdapter(adapter);*/
+        //dref1 = new Firebase("")
+
+        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,list);
+        //listview.setAdapter(adapter);
+        //Query q = FirebaseDatabase.getInstance().getReference().child("users").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        /*dref=FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("results");
+        dref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String value= dataSnapshot.getValue(String.class);
+                list.add(value);
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
+        listview.setAdapter(adapter);
         storageRef = FirebaseStorage.getInstance().getReference();
         storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
