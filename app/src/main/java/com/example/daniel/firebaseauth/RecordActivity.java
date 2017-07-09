@@ -79,6 +79,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     Uri downloadUri;
     public String generatedFilepath;
     public String ip;
+    public String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +112,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ip = (String)dataSnapshot.child("teste").getValue();
-                Log.i("666",ip);
-
+                url = (String)dataSnapshot.child("teste").getValue();
+                Log.i("666",url);
+                //url = "https://requestb.in/"+ip ; //https://requestb.in/1mq7j9f1
             }
 
             @Override
@@ -121,9 +122,6 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
-
-
-
 
         //initializing views
         // buttonLogout = (Button) findViewById(R.id.ButtonLogout);
@@ -208,16 +206,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
 
-
-
-
-
-
-
             FirebaseUser user = firebaseAuth.getCurrentUser();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            final String url = "https://requestb.in/"+ip.toString(); //https://requestb.in/1mq7j9f1
-
             Log.i("URL",url );
             String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
             //String myUrl = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
@@ -292,6 +282,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 mRecorder.reset();
                 buttonSend.setText("Start");
                 uploadAudio();
+
             }
         }
     }
