@@ -216,7 +216,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             FirebaseUser user = firebaseAuth.getCurrentUser();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            final String url = "https://requestb.in/"+ip; //https://requestb.in/1mq7j9f1
+            final String url = "https://requestb.in/"+ip.toString(); //https://requestb.in/1mq7j9f1
 
             Log.i("URL",url );
             String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
