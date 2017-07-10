@@ -219,8 +219,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             String idi = "codicePaziente";
             String idii = "audio_position";
             String id = user.getUid();
-
-            jsonBody.put("codicemed",UserInformation.class);
+           // String codiceMedico;
+            //UserInformation userInformation = new UserInformation();
+            //codiceMedico =userInformation.getCodiceMedico();
+            //jsonBody.put("codicemed",codiceMedico);
+            //Log.i("codmed",codiceMedico);
             jsonBody.put(link, generatedFilepath);
             jsonBody.put(idi,id);
             jsonBody.put(idii,audio_pos);

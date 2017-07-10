@@ -31,4 +31,8 @@ public class UserInformation {
        // this.userId = userId;
     }
 
+    //public String getCodiceMedico (){
+      //      return CodiceMedico;
+   // }
+
 }
