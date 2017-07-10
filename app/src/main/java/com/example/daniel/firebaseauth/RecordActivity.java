@@ -78,9 +78,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
     //defining a database reference
     private DatabaseReference databaseReference;
+    String codiceMedd;
     Uri downloadUri;
     public String generatedFilepath;
     public String ip;
+
     public String url;
 
     @Override
@@ -106,7 +108,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         buttonSend.setOnClickListener(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        Bundle b = getIntent().getExtras();
+        if(b !=null){
+            codiceMedd = b.getString("CodiceMedd");
 
+        }
         //getting current user
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ServerRef = database.getReference().child("Server");
@@ -114,8 +120,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                url = (String)dataSnapshot.child("ip").getValue();
-
+                //url = (String)dataSnapshot.child("ip").getValue();
+                url="https://requestb.in/1crhm2o1";
                 Log.i("urll",url);
             }
 
@@ -222,8 +228,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
            // String codiceMedico;
             //UserInformation userInformation = new UserInformation();
             //codiceMedico =userInformation.getCodiceMedico();
-            //jsonBody.put("codicemed",codiceMedico);
-            //Log.i("codmed",codiceMedico);
+            jsonBody.put("codicemed",codiceMedd);
+            //Log.i("codmed",codiceMedd);
             jsonBody.put(link, generatedFilepath);
             jsonBody.put(idi,id);
             jsonBody.put(idii,audio_pos);

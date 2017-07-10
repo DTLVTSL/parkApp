@@ -76,7 +76,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         firebaseAuth = FirebaseAuth.getInstance();
         databaseUser = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
-        b = getIntent().getExtras();
+
 
         buttonSave = (Button) findViewById(R.id.buttonSave);
 

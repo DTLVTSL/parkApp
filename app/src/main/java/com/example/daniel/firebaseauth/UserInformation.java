@@ -30,7 +30,9 @@ public class UserInformation {
         this.CodiceMedico = CodiceMedico;
        // this.userId = userId;
     }
-
+    public String getCodMedico() {
+        return CodiceMedico;
+    }
     //public String getCodiceMedico (){
       //      return CodiceMedico;
    // }

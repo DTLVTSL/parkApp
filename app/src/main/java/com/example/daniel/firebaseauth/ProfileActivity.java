@@ -57,7 +57,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private EditText DateBirth;
     private EditText gender;
     private EditText CodiceMedico;
+    private Bundle b;
     private Button buttonSave;
+    public String codiceMedico=new String();
    // private String name;
 
     //defining a database reference
@@ -106,10 +108,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String dby = DateBirth.getText().toString().trim();
         String gen = gender.getText().toString().trim();
         String codmed = CodiceMedico.getText().toString().trim();
+
        // String userId = "userId";
         //creating a userinformation object
         UserInformation userInformation = new UserInformation(name, sur, cod, dby,gen,codmed);
 
+        // codiceMedico=userInformation.getCodMedico().toString();
+        codiceMedico=new String(userInformation.getCodMedico());
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -139,10 +144,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             finish();
             Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
             //intent.putExtra("Name",editTextName);
+            intent.putExtra("CodiceMedd",codiceMedico);
             startActivity(intent);
 
         }
-
-
     }
 }
