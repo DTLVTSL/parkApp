@@ -30,6 +30,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -113,9 +114,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                url = (String)dataSnapshot.child("teste").getValue();
-                Log.i("666",url);
-                //url = "https://requestb.in/"+ip ; //https://requestb.in/1mq7j9f1
+                url = (String)dataSnapshot.child("ip").getValue();
+
+                Log.i("urll",url);
             }
 
             @Override
@@ -219,7 +220,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             String idii = "audio_position";
             String id = user.getUid();
 
-
+            jsonBody.put("codicemed",UserInformation.class);
             jsonBody.put(link, generatedFilepath);
             jsonBody.put(idi,id);
             jsonBody.put(idii,audio_pos);
