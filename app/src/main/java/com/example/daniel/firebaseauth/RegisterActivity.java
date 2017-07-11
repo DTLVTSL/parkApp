@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
     public static boolean registration;
+    public Bundle b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //attaching listener to button
         textViewSignin.setOnClickListener(this);
         buttonSignup.setOnClickListener(this);
+        b=getIntent().getExtras();
     }
 
     private void registerUser(){

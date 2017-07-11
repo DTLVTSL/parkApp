@@ -30,6 +30,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,6 +57,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.daniel.firebaseauth.R.id.action_context_bar;
+import static com.example.daniel.firebaseauth.R.id.editCodiceMedico;
 import static com.example.daniel.firebaseauth.R.id.progressBar;
 
 
@@ -76,9 +78,12 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
     //defining a database reference
     private DatabaseReference databaseReference;
+    String codiceMedd;
     Uri downloadUri;
     public String generatedFilepath;
     public String ip;
+
+    public String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +108,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         buttonSend.setOnClickListener(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        Bundle b = getIntent().getExtras();
+        if(b !=null){
+            codiceMedd = b.getString("CodiceMedd");
 
+        }
         //getting current user
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ServerRef = database.getReference().child("Server");
@@ -111,9 +120,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ip = (String)dataSnapshot.child("teste").getValue();
-                Log.i("666",ip);
-
+                //url = (String)dataSnapshot.child("ip").getValue();
+                url="https://requestb.in/1crhm2o1";
+                Log.i("urll",url);
             }
 
             @Override
@@ -121,8 +130,6 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
-
-
 
 
         //initializing views
@@ -208,16 +215,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
 
-
-
-
-
-
-
             FirebaseUser user = firebaseAuth.getCurrentUser();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            final String url = "https://requestb.in/"+ip.toString(); //https://requestb.in/1mq7j9f1
-
             Log.i("URL",url );
             String audio_pos = "gs://parkinsonapp-7b987.appspot.com/audio/" + user.getUid() + "/" + fileName;
             //String myUrl = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/audio%2FRivbQO2CBsZsIiWPyKvMmL97rYU2%2F2017_07_05_14_29_24.wav?alt=media&token=e882ce89-5edc-4247-9e09-a516dd5bbf5d";
@@ -226,10 +225,15 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             String idi = "codicePaziente";
             String idii = "audio_position";
             String id = user.getUid();
-
+           // String codiceMedico;
+            //UserInformation userInformation = new UserInformation();
+            //codiceMedico =userInformation.getCodiceMedico();
+            jsonBody.put("codicemed",codiceMedd);
+            //Log.i("codmed",codiceMedd);
             jsonBody.put(link, generatedFilepath);
             jsonBody.put(idi,id);
             jsonBody.put(idii,audio_pos);
+
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -292,6 +296,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 mRecorder.reset();
                 buttonSend.setText("Start");
                 uploadAudio();
+
             }
         }
     }

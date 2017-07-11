@@ -56,7 +56,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editTextSurname;
     private EditText DateBirth;
     private EditText gender;
+    private EditText CodiceMedico;
+    private Bundle b;
     private Button buttonSave;
+    public String codiceMedico=new String();
    // private String name;
 
     //defining a database reference
@@ -87,6 +90,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         editTextSurname = (EditText) findViewById(R.id.editTextSurname);
         DateBirth = (EditText) findViewById(R.id.editDateBirth);
         gender = (EditText) findViewById(R.id.editTextgender);
+        CodiceMedico = (EditText) findViewById(R.id.editCodiceMedico);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -103,10 +107,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String cod = editCodicFisc.getText().toString().trim();
         String dby = DateBirth.getText().toString().trim();
         String gen = gender.getText().toString().trim();
+        String codmed = CodiceMedico.getText().toString().trim();
+
        // String userId = "userId";
         //creating a userinformation object
-        UserInformation userInformation = new UserInformation(name, sur, cod, dby,gen);
+        UserInformation userInformation = new UserInformation(name, sur, cod, dby,gen,codmed);
 
+        // codiceMedico=userInformation.getCodMedico().toString();
+        codiceMedico=new String(userInformation.getCodMedico());
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -117,7 +125,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         * and then for that user under the unique id we are saving data
         * for saving data we are using setvalue method this method takes a normal java object
         * */
-        databaseReference.child("users").child(user.getUid()).child("profile").setValue(userInformation);
+        databaseReference.child("Medici").child(codmed).child("Pazienti").child(user.getUid()).child("profile").setValue(userInformation);
+
+
+        //cosi era prima
+        //databaseReference.child("users").child(user.getUid()).child("profile").setValue(userInformation);
 
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
@@ -132,10 +144,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             finish();
             Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
             //intent.putExtra("Name",editTextName);
+            intent.putExtra("CodiceMedd",codiceMedico);
             startActivity(intent);
 
         }
-
-
     }
 }

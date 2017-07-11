@@ -74,6 +74,17 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="Sesso" />
+        <EditText
+            android:id="@+id/editCodiceMedico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Codice Medico" />
+
+
 
 
 
