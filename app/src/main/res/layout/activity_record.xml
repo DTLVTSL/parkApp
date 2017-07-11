@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Per Registrare la tua voce, clickare sul bottone roso " />
+            android:text="Per registrare la tua voce clicca sul microfono rosso " />
 
         <ImageView
             android:id="@+id/imageView2"

@@ -26,7 +26,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearance"
-            android:text="Login del'Utente"
+            android:text="Login dell'Utente"
             android:layout_margin="15dp"
             android:layout_gravity="center_horizontal"/>
 
@@ -52,7 +52,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Accedere" />
+            android:text="Accedi" />
 
         <TextView
             android:textAlignment="center"

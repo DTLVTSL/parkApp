@@ -57,7 +57,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.daniel.firebaseauth.R.id.action_context_bar;
-import static com.example.daniel.firebaseauth.R.id.editCodiceMedico;
+//import static com.example.daniel.firebaseauth.R.id.editCodiceMedico;
 import static com.example.daniel.firebaseauth.R.id.progressBar;
 
 
@@ -68,9 +68,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private StorageReference mStorageRef;
     private DatabaseReference DataRef;
     private Button buttonSend;
+    String codeMedic;
     // private Button buttonLogout;
     private String mFileName = null;
     private WavAudioRecorder mRecorder;
+    UserInformation userInformation;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
     Date now = new Date();
     String fileName = formatter.format(now) + ".wav";
@@ -81,6 +83,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     String codiceMedd;
     Uri downloadUri;
     public String generatedFilepath;
+    private String codMed;
     public String ip;
 
     public String url;
@@ -109,10 +112,17 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         Bundle b = getIntent().getExtras();
-        if(b !=null){
-            codiceMedd = b.getString("CodiceMedd");
+        int key = 1;
+        if(b != null){
+            if(b.getInt("key") == key){//it means the user add a new expense and will show the expenseListView
 
+                String codiceMeddd= b.getString("CodiceMedd");
+                codMed=codiceMeddd;
+                //userInformation = new UserInformation(codMed,codMed,codMed,codMed,codMed,codMed);
+
+            }
         }
+
         //getting current user
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ServerRef = database.getReference().child("Server");
@@ -130,7 +140,21 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
+        DatabaseReference usersRef = database.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).child("profile") ;
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                codeMedic = (String)dataSnapshot.child("CodiceMedico").getValue();
+                //url="https://requestb.in/1crhm2o1";
+                //Log.i("urll",url);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //initializing views
         // buttonLogout = (Button) findViewById(R.id.ButtonLogout);
@@ -215,6 +239,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
 
+
+
+
             FirebaseUser user = firebaseAuth.getCurrentUser();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             Log.i("URL",url );
@@ -226,9 +253,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             String idii = "audio_position";
             String id = user.getUid();
            // String codiceMedico;
-            //UserInformation userInformation = new UserInformation();
-            //codiceMedico =userInformation.getCodiceMedico();
-            jsonBody.put("codicemed",codiceMedd);
+            String codiceMedico;
+            //UserInformation userInformation2 = new UserInformation();
+          //  String codiceMedico3 =userInformation2.getCodMedico();
+            jsonBody.put("codicemed",codeMedic);
             //Log.i("codmed",codiceMedd);
             jsonBody.put(link, generatedFilepath);
             jsonBody.put(idi,id);

@@ -17,10 +17,6 @@ public class UserInformation {
     public UserInformation(){
 
     }
-
-
-
-
     public UserInformation(String name, String Surname, String CodiceFiscale, String datebirth, String gender, String CodiceMedico) {
         this.name = name;
         this.Surname = Surname;

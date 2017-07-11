@@ -13,23 +13,23 @@
         <item
             android:id="@+id/nav_statistics"
             android:icon="@mipmap/statistic"
-            android:title="Statistica" />
+            android:title="Statistiche" />
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Ferramenta" />
+            android:title="Impostazioni" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Communicazioni">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Condividere" />
+                android:title="Condividi" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Inviare" />
+                android:title="Invia" />
         </menu>
     </item>
 

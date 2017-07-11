@@ -12,6 +12,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.daniel.firebaseauth.StatisticsActivity">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:text="Punteggio UPDRS"
+        android:layout_gravity="center"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,25 +26,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1">
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/graph"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dip"
-                android:layout_marginTop="24dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rotation="-90"
+                    android:layout_gravity="center"
+                    android:text="UPDRS" />
+
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/graph"
+                    android:layout_width="260dp"
+                    android:layout_height="255dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="24dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="DATA" />
 
             <Button
                 android:id="@+id/load_file_from_server"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:text="clica qui per guardare suo grado UPDRS" />
-
-            <ListView
-                android:id="@+id/ListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:text="clicca qui per vedere il tuoo grado UPDRS" />
 
             <Button
                 android:id="@+id/ButtonLogout"

@@ -17,9 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Button;
-import com.firebase.ui.database.FirebaseListAdapter;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,23 +59,23 @@ import android.widget.ListView;
 
 import  com.google.firebase.storage.StorageTask;
 
+import static android.R.id.list;
+
 
 public class StatisticsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = StatisticsActivity.class.getSimpleName();
     private GraphView mGraph;
     private Button ButtonLogout;
-    ListView listview;
-    ArrayList<String> list = new ArrayList<>();
-
-    ArrayAdapter<String> adapter;
-    private DatabaseReference dref;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
-
     private StorageReference storageRef;
     //private Uri myuri;
     private String generatedFilepath;
     //private Uri downloadUri;
+    ListView listView;
+    ArrayList<String> list = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+    public String value;
 
 
     //private static final String PATH_TO_SERVER = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f";
@@ -96,63 +95,12 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
+        adapter= new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,list);
+        //
+        setTitle("Mio risultato");
 
-        //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
-
-        //Firebase.setAndroidContext(this);
-
-        //listview = (ListView) findViewById(R.id.ListView);
-        //objetoRef = new Firebase ("https://parkinsonapp-7b987.firebaseio.com");
-        //Firebase novaRef= objetoRef.child("users").child(user.getUid()).child("results");
-
-        /*FirebaseListAdapter<String> adapter =   new FirebaseListAdapter<String>(this,String.class,android.R.layout.simple_list_item_1,novaRef) {
-            @Override
-            protected void populateView(View v, String s, int position) {
-                TextView text = (TextView) v.findViewById(android.R.id.text1);
-                text.setText(s);
-
-            }
-        };
-
-        listview.setAdapter(adapter);*/
-        //dref1 = new Firebase("")
-
-        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,list);
-        //listview.setAdapter(adapter);
-        //Query q = FirebaseDatabase.getInstance().getReference().child("users").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        /*dref=FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("results");
-        dref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value= dataSnapshot.getValue(String.class);
-                list.add(value);
-
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-        listview.setAdapter(adapter);
+        //getting current user
         storageRef = FirebaseStorage.getInstance().getReference();
         storageRef.child("statistics").child(user.getUid()).child("teste.csv").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -212,6 +160,38 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         series.setTitle("UPDRS GRADE");
         mGraph.getLegendRenderer().setVisible(true);
         mGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        DatabaseReference dbPrediccionff;
+        dbPrediccionff = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("results");
+        dbPrediccionff.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                value = (String)dataSnapshot.getValue();
+                list.add(value );
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void createBarChartGraph(List<String[]> result){
@@ -240,8 +220,8 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
         try {
             mUrl = new URL(generatedFilepath);
-           // mUrl = new URL(myuri.toString());
-           // mUrl = new URL("https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f");mUrl = new URL(
+            // mUrl = new URL(myuri.toString());
+            // mUrl = new URL("https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/statistics%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2Fteste.csv?alt=media&token=93c9fca8-0aef-4a9f-bc0a-de2f0dadb96f");mUrl = new URL(
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

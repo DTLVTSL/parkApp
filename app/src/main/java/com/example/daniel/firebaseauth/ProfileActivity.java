@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private EditText CodiceMedico;
     private Bundle b;
     private Button buttonSave;
-    public String codiceMedico=new String();
+    public String codiceMedico2 = "";
    // private String name;
 
     //defining a database reference
@@ -100,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //initializing views
 
 
-    private void saveUserInformation() {
+    private String saveUserInformation() {
         //Getting values from database
         String name = editTextName.getText().toString().trim();
         String sur = editTextSurname.getText().toString().trim();
@@ -114,7 +114,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         UserInformation userInformation = new UserInformation(name, sur, cod, dby,gen,codmed);
 
         // codiceMedico=userInformation.getCodMedico().toString();
-        codiceMedico=new String(userInformation.getCodMedico());
+        //UserInformation userInformation2 = new UserInformation();
+        final String codiceMedico2=userInformation.getCodMedico();
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -129,10 +130,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
 
         //cosi era prima
-        //databaseReference.child("users").child(user.getUid()).child("profile").setValue(userInformation);
+        databaseReference.child("users").child(user.getUid()).child("profile").setValue(userInformation);
 
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
+        return codiceMedico2;
     }
 
 
@@ -140,11 +142,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         if(view == buttonSave){
-            saveUserInformation();
+            String codiceMedico3=saveUserInformation();
             finish();
             Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
             //intent.putExtra("Name",editTextName);
-            intent.putExtra("CodiceMedd",codiceMedico);
+            intent.putExtra("key",1);
+            intent.putExtra("CodiceMedd",codiceMedico3);
             startActivity(intent);
 
         }

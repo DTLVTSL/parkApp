@@ -42,8 +42,9 @@ public class NavigationActivity extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth firebaseAuth;
     private StorageReference storageRef;
-    private Bundle b;
-    private String name;
+
+
+    private String codMed;
     private TextView profileName;
     private String uName = "";
     private UserInformation user = null;
@@ -81,7 +82,25 @@ public class NavigationActivity extends AppCompatActivity
         photoProfile = (ImageView) headerView.findViewById(R.id.photoProfile);
         profileName.setText(userInfo.getEmail());
         //username =(TextView) headerView.findViewById(R.id.username);
-        b = getIntent().getExtras();
+        /*Bundle b = getIntent().getExtras();
+        if(b !=null){
+            Intent My_Intent = getIntent();
+            String codiceMeddd=My_Intent.getExtras().getString("CodiceMedd");
+
+        }*/
+
+        Bundle b = getIntent().getExtras();
+        int key = 1;
+        if(b != null){
+            if(b.getInt("key") == key){//it means the user add a new expense and will show the expenseListView
+
+                String codiceMeddd= b.getString("CodiceMedd");
+                codMed=codiceMeddd;
+
+           }
+        }
+
+
         storageRef = FirebaseStorage.getInstance().getReference();
         //url = "https://firebasestorage.googleapis.com/v0/b/parkinsonapp-7b987.appspot.com/o/photosProfile%2F9MhN2zJrf1P7Hs7A9PuonIixVR02%2F142212?alt=media&token=5e905df7-5ec2-468f-abd1-2de66dfc4fed";
         StorageReference newStorageRef = storageRef.child("photosProfile").child(userInfo.getUid()).child("imagineProfile.jpg");
@@ -93,6 +112,8 @@ public class NavigationActivity extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Intent myIntent = new Intent(NavigationActivity.this, RecordActivity.class);
+                myIntent.putExtra("key",1);
+                myIntent.putExtra("CodiceMedd",codMed);
                 startActivity(myIntent);
             }
         });
@@ -162,10 +183,14 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_test:
                 Intent j = new Intent(NavigationActivity.this,RecordActivity.class);
+                intent.putExtra("key",1);
+                intent.putExtra("CodiceMedd",codMed);
                 startActivity(j);
                 break;
             case R.id.nav_statistics:
                 Intent k = new Intent(NavigationActivity.this,StatisticsActivity.class);
+                intent.putExtra("key",1);
+                intent.putExtra("CodiceMedd",codMed);
                 startActivity(k);
                 break;
             case R.id.nav_tools:
@@ -177,6 +202,8 @@ public class NavigationActivity extends AppCompatActivity
                 String shareSub = "Scrivi il objecto del messagio";
                 myIntent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
                 myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                intent.putExtra("key",1);
+                intent.putExtra("CodiceMedd",codMed);
                 startActivity(Intent.createChooser(myIntent,"Condividendo"));
                 break;
             case R.id.nav_send:

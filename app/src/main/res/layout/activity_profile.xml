@@ -26,7 +26,6 @@
             android:layout_marginTop="20dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
@@ -84,10 +83,6 @@
             android:layout_marginRight="20dp"
             android:hint="Codice Medico" />
 
-
-
-
-
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="116dp"
@@ -95,7 +90,7 @@
             android:background="@color/colorPrimary"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="130dp"
-            android:text="Registrare" />
+            android:text="Registrati" />
 
 
     </LinearLayout>
