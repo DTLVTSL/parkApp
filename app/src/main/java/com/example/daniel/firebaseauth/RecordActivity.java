@@ -130,8 +130,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //url = (String)dataSnapshot.child("ip").getValue();
-                url="https://requestb.in/1crhm2o1";
+                url = (String)dataSnapshot.child("ip").getValue();
+                //url="https://requestb.in/1crhm2o1";
                 Log.i("urll",url);
             }
 

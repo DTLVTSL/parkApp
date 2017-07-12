@@ -6,15 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.daniel.firebaseauth.ProfileActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="24dp">
+
+
+
 
 
         <TextView
@@ -23,35 +24,41 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Compila i seguenti spazi"
-            android:layout_marginTop="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_marginTop="21dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/editDateBirth" />
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Scrivi nome" />
+            android:hint="Scrivi nome"
+            android:layout_below="@+id/initMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="31dp" />
 
         <EditText
             android:id="@+id/editTextSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Scrivi cognome" />
+            android:hint="Scrivi cognome"
+            android:layout_below="@+id/editTextName"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/editCodicFisc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Codice Fiscale" />
+            android:hint="Codice Fiscale"
+            android:layout_below="@+id/editTextSurname"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/editDateBirth"
@@ -59,41 +66,46 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="date"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Data di nascita  gg/mm/aa" />
+            android:hint="Data di nascita  gg/mm/aa"
+            android:layout_below="@+id/editCodicFisc"
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:id="@+id/editTextgender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textShortMessage"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Sesso" />
+            android:hint="Sesso"
+            android:layout_below="@+id/editCodiceMedico"
+            android:layout_alignParentStart="true" />
         <EditText
             android:id="@+id/editCodiceMedico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textShortMessage"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Codice Medico" />
+            android:hint="Codice Medico"
+            android:layout_below="@+id/editDateBirth"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="116dp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:layout_marginTop="40dp"
             android:layout_marginLeft="130dp"
-            android:text="Registrati" />
+            android:text="Registrati"
+            android:layout_below="@+id/editTextgender"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="43dp" />
 
 
-    </LinearLayout>
+
 
 
 </RelativeLayout>
