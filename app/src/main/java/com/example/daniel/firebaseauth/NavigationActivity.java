@@ -183,14 +183,14 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_test:
                 Intent j = new Intent(NavigationActivity.this,RecordActivity.class);
-                intent.putExtra("key",1);
-                intent.putExtra("CodiceMedd",codMed);
+                //intent.putExtra("key",1);
+                //intent.putExtra("CodiceMedd",codMed);
                 startActivity(j);
                 break;
             case R.id.nav_statistics:
                 Intent k = new Intent(NavigationActivity.this,StatisticsActivity.class);
-                intent.putExtra("key",1);
-                intent.putExtra("CodiceMedd",codMed);
+                //intent.putExtra("key",1);
+                //intent.putExtra("CodiceMedd",codMed);
                 startActivity(k);
                 break;
             case R.id.nav_tools:
@@ -202,8 +202,8 @@ public class NavigationActivity extends AppCompatActivity
                 String shareSub = "Scrivi il objecto del messagio";
                 myIntent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
                 myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-                intent.putExtra("key",1);
-                intent.putExtra("CodiceMedd",codMed);
+                //intent.putExtra("key",1);
+                //intent.putExtra("CodiceMedd",codMed);
                 startActivity(Intent.createChooser(myIntent,"Condividendo"));
                 break;
             case R.id.nav_send:
