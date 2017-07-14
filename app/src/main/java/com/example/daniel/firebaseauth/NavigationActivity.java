@@ -190,7 +190,7 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_statistics:
                 Intent k = new Intent(NavigationActivity.this,StatisticsActivity.class);
                 //intent.putExtra("key",1);
-                //intent.putExtra("CodiceMedd",codMed);
+                ////intent.putExtra("CodiceMedd",codMed);
                 startActivity(k);
                 break;
             case R.id.nav_tools:
