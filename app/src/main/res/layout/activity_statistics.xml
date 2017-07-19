@@ -45,25 +45,43 @@
 
                 <com.jjoe64.graphview.GraphView
                     android:id="@+id/graph"
-                    android:layout_width="260dp"
-                    android:layout_height="255dp"
+                    android:layout_width="254dp"
+                    android:layout_height="234dp"
                     android:layout_gravity="right"
                     android:layout_marginTop="24dp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="45dp"
+                android:layout_width="149dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="test" />
+                android:text="Numero di test"
+                android:layout_weight="0.38" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="193dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:gravity="left"
+                android:text="Resultato della tua prova:" />
+
+            <TextView
+                android:id="@+id/textresult"
+                android:layout_width="193dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="0.51"
+                android:text="UPDRS" />
+
 
             <Button
                 android:id="@+id/load_file_from_server"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:text="clicca qui per vedere il tuo punteggio UPDRS" />
 
             <Button
