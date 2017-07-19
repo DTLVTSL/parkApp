@@ -20,7 +20,7 @@
             android:title="Impostazioni" />
     </group>
 
-    <item android:title="Communicazioni">
+    <item android:title="Comunicazioni">
         <menu>
             <item
                 android:id="@+id/nav_share"

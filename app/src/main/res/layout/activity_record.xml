@@ -30,8 +30,8 @@
             android:layout_width="291dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Per registrare la tua voce clicca sul microfono rosso " />
+            android:layout_marginTop="20dp"
+            android:text="Per registrare la tua voce clicca sul bottone rosso. Pronuncia la lettera A per 10 secondi, poi clicca nuovamente sul bottone per interropere la registrazione " />
 
         <ImageView
             android:id="@+id/imageView2"

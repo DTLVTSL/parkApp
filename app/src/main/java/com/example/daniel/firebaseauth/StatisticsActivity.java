@@ -97,7 +97,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         }
         adapter= new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,list);
         //
-        setTitle("Mio risultato");
+        setTitle("Risultato");
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         //getting current user
@@ -156,6 +156,13 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         }
         BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPoints);
         mGraph.addSeries(series);
+        mGraph.getViewport().setMinX(0);
+        mGraph.getViewport().setMaxX(10);
+        mGraph.getViewport().setMinY(0);
+        mGraph.getViewport().setMaxY(10);
+
+        mGraph.getViewport().setYAxisBoundsManual(true);
+        mGraph.getViewport().setXAxisBoundsManual(true);
         // legend
         series.setTitle("UPDRS GRADE");
         mGraph.getLegendRenderer().setVisible(true);
